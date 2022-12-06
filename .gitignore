@@ -65,5 +65,7 @@ crashlytics-build.properties
 .Trashes
 Icon?
 Ehthumbs.db
-Thumbs.db
+[Th]umbs.db
+[Dd]esktop.ini
+.vsconfig
 /Build
