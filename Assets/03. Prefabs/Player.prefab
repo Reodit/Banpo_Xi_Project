@@ -574,7 +574,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 73fbf3aa05f6be24780438449f505aa3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  useRootMotion: 0
+  useRootMotion: 1
   rotateByWorld: 0
   useContinuousSprint: 1
   sprintOnlyFree: 1
@@ -585,9 +585,9 @@ MonoBehaviour:
     rotationSpeed: 16
     walkByDefault: 0
     rotateWithCamera: 0
-    walkSpeed: 1
-    runningSpeed: 2
-    sprintSpeed: 3
+    walkSpeed: 0.5
+    runningSpeed: 1
+    sprintSpeed: 1.5
   strafeSpeed:
     movementSmooth: 6
     animationSmooth: 0.2
