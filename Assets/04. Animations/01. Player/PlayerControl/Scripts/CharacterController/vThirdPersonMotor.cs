@@ -258,6 +258,7 @@ namespace Invector.vCharacterController
                 attackIndex = 0;
                 isAttacking = false;
                 animator.ResetTrigger("Attack");
+                
 
             }
         }
