@@ -162,7 +162,9 @@ namespace Invector.vCharacterController
 
             if (animator.GetCurrentAnimatorStateInfo(0).IsTag("Attack"))
             {
+                
                 animator.SetTrigger("Attack");
+                
             }
         }
     }

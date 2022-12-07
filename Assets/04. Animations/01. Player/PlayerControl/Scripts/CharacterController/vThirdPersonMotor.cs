@@ -198,6 +198,7 @@ namespace Invector.vCharacterController
             _rigidbody.velocity = targetVelocity;
         }
 
+
         public virtual void CheckSlopeLimit()
         {
             if (input.sqrMagnitude < 0.1) return;

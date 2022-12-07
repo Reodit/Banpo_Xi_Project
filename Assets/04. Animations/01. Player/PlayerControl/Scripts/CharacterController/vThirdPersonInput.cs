@@ -145,6 +145,10 @@ namespace Invector.vCharacterController
         {
             return !cc.stopMove && !cc.isDashing;
         }
+        protected virtual bool AttackConditions()
+        {
+            return !cc.stopMove && !cc.isJumping;
+        }
 
         /// <summary>
         /// Input to trigger the Jump 
@@ -160,14 +164,10 @@ namespace Invector.vCharacterController
                 cc.Dash();
         }
 
-        protected virtual bool AttackConditions()
-        {
-            return !cc.stopMove && !cc.isJumping;
 
-        }
         protected virtual void AttackInput()
         {
-            if (Input.GetKey(attackInput) && AttackConditions())
+            if (Input.GetKeyDown(attackInput) && AttackConditions())
             {
                 cc.Attack();
             }
