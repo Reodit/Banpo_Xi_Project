@@ -2,7 +2,7 @@ using UnityEngine;
 
 public abstract class BaseGameEntity : MonoBehaviour
 {
-    // 정적 변수이기 때문에 1개만 존재.ㄴ
+    // 정적 변수이기 때문에 1개만 존
     private static int m_iNextValidID = 0;
 
     // BaseGameEntity를 상속받는 모든 게임오브젝트는 ID 번호를 부여받는데
