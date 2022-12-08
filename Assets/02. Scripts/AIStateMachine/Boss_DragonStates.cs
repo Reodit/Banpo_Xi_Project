@@ -17,14 +17,57 @@ namespace Boss_DragonStates
                 entity.Animator.GetCurrentAnimatorStateInfo(0).normalizedTime >= 1f &&
                 entity.Animator.GetCurrentAnimatorStateInfo(0).IsName("Idle"))
             {
-                if (entity.HP < 80)
+                if (entity.HP < 80 &&
+                    entity.HP >= 70)
                 {
                     entity.ChangeState(Boss_Dragon_States.Flying);
                 }
 
-                else
+                else if (entity.HP >= 80)
                 {
                     entity.ChangeState(Boss_Dragon_States.NormalAttack);
+                }
+                
+                else if (entity.HP < 70 &&
+                         entity.HP >= 60)
+                {
+                    entity.ChangeState(Boss_Dragon_States.Defend);
+                }
+                
+                else if (entity.HP < 60 &&
+                         entity.HP >= 50)
+                {
+                    entity.ChangeState(Boss_Dragon_States.ClawAttack);
+                }
+                
+                else if (entity.HP < 50 &&
+                         entity.HP >= 40)
+                {
+                    entity.ChangeState(Boss_Dragon_States.Chase);
+                }
+                
+                else if (entity.HP < 40 &&
+                         entity.HP >= 30)
+                {
+                    entity.ChangeState(Boss_Dragon_States.Die);
+                }
+                
+                else if (entity.HP < 30 &&
+                         entity.HP >= 20)
+                {
+                    entity.ChangeState(Boss_Dragon_States.Screaming);
+                }
+                
+                else if (entity.HP < 20 &&
+                         entity.HP >= 10)
+                {
+                    entity.ChangeState(Boss_Dragon_States.BreathOnAir);
+                }
+                
+                else if (entity.HP < 10 &&
+                         entity.HP >= 0)
+                {
+                    entity.ChangeState(Boss_Dragon_States.BreathOnLand);
                 }
             }
 
@@ -41,7 +84,7 @@ namespace Boss_DragonStates
     {
         public override void Enter(Boss_Dragon entity)
         {
-            entity.Animator.Play("Attack");
+            entity.Animator.Play("AttackMouth1");
             entity.PrintText("NormalAttack Enter");
         }
 
@@ -49,12 +92,7 @@ namespace Boss_DragonStates
         {
             if (entity.Animator.GetCurrentAnimatorStateInfo(0).normalizedTime >= 1f )
             {
-                if (entity.MinDistance > 10)
-                {
-                    entity.ChangeState(Boss_Dragon_States.Idle);
-
-                    entity.Animator.Play("Attack");
-                }
+                entity.ChangeState(Boss_Dragon_States.Idle);
             }
 
             entity.PrintText("NormalAttack Execute");
@@ -66,49 +104,23 @@ namespace Boss_DragonStates
         }
     }
 
-    public class Dragon_Breath : State
+    public class BreathOnAir : State
     {
         public override void Enter(Boss_Dragon entity)
         {
-
+            entity.Animator.Play("BreathOnAir1");
         }
 
         public override void Execute(Boss_Dragon entity)
         {
-            int examScore = 0;
-
-            // 지식이 10이면 획득점수는 10
-            if (entity.HP == 10)
+            if (entity.Animator.GetCurrentAnimatorStateInfo(0).normalizedTime >= 1f )
             {
-                examScore = 10;
-            }
-            else
-            {
-                // randIndex가 지식 수치보다 낮으면 6~10점, 지식 수치보다 높으면 1~5점
-                // 즉, 지식이 높을수록 높은 점수를 받을 확률이 높다
-            }
-
-            // 시험 점수에 따라 다음 행동 설정
-            if (examScore <= 3)
-            {
-                // 술집에 가서 술을 마시는 "HitTheBottle" 상태로 변경
-                entity.ChangeState(Boss_Dragon_States.Walk);
-            }
-            else if (examScore <= 7)
-            {
-                // 도서관에 가서 공부를 하는 "StudyHard" 상태로 변경
-                entity.ChangeState(Boss_Dragon_States.NormalAttack);
-            }
-            else
-            {
-                // PC방에 가서 게임을 하는 "PlayAGame" 상태로 변경
-                entity.ChangeState(Boss_Dragon_States.Flying);
+                entity.ChangeState(Boss_Dragon_States.Idle);
             }
         }
 
         public override void Exit(Boss_Dragon entity)
         {
-            entity.PrintText("강의실 문을 열고 밖으로 나온다.");
         }
     }
 
@@ -138,30 +150,123 @@ namespace Boss_DragonStates
         }
     }
 
-    public class Walk : State
+    public class ClawAttack : State
     {
         public override void Enter(Boss_Dragon entity)
         {
-            //entity.CurrentLocation = Phase.Pub;
-
-            entity.PrintText("술이나 한잔할까? 술집으로 들어간다.");
+            entity.Animator.Play("ClawAttack1");
         }
 
         public override void Execute(Boss_Dragon entity)
         {
-            entity.PrintText("술을 마신다.");
-
-            entity.AP -= 5;
-
-
-                // 집에 가서 쉬는 "RestAndSleep" 상태로 변경
+            if (entity.Animator.GetCurrentAnimatorStateInfo(0).normalizedTime >= 1)
+            {
                 entity.ChangeState(Boss_Dragon_States.Idle);
-            
+            }
         }
 
         public override void Exit(Boss_Dragon entity)
         {
-            entity.PrintText("그만 마셔야지.. 술집에서 나온다.");
+        }
+    }
+    
+    public class Defend : State
+    {
+        public override void Enter(Boss_Dragon entity)
+        {
+            entity.Animator.Play("Defend1");
+        }
+
+        public override void Execute(Boss_Dragon entity)
+        {
+            if (entity.Animator.GetCurrentAnimatorStateInfo(0).normalizedTime >= 1)
+            {
+                entity.ChangeState(Boss_Dragon_States.Idle);
+            }
+        }
+
+        public override void Exit(Boss_Dragon entity)
+        {
+        }
+    }
+    
+    public class Screaming : State
+    {
+        public override void Enter(Boss_Dragon entity)
+        {
+            entity.Animator.Play("Screaming1");
+        }
+
+        public override void Execute(Boss_Dragon entity)
+        {
+            if (entity.Animator.GetCurrentAnimatorStateInfo(0).normalizedTime >= 1)
+            {
+                entity.ChangeState(Boss_Dragon_States.Idle);
+            }        
+        }
+
+        public override void Exit(Boss_Dragon entity)
+        {
+        }
+    }
+    
+    public class BreathOnLand : State
+    {
+        public override void Enter(Boss_Dragon entity)
+        {
+            entity.Animator.Play("BreathOnLand1");
+        }
+
+        public override void Execute(Boss_Dragon entity)
+        {
+            if (entity.Animator.GetCurrentAnimatorStateInfo(0).normalizedTime >= 1)
+            {
+                entity.ChangeState(Boss_Dragon_States.Idle);
+            }
+        }
+
+        public override void Exit(Boss_Dragon entity)
+        {
+        }
+    }
+    
+    public class Die : State
+    {
+        public override void Enter(Boss_Dragon entity)
+        {
+            entity.Animator.Play("Die1");
+        }
+
+        public override void Execute(Boss_Dragon entity)
+        {
+            if (entity.Animator.GetCurrentAnimatorStateInfo(0).normalizedTime >= 1)
+            {
+                entity.ChangeState(Boss_Dragon_States.Idle);
+            }        
+        }
+
+        public override void Exit(Boss_Dragon entity)
+        {
+        }
+    }
+    
+    public class Chase : State
+    {
+        public override void Enter(Boss_Dragon entity)
+        {
+            entity.Animator.Play("Chase1");
+        }
+
+        public override void Execute(Boss_Dragon entity)
+        {
+            if (entity.Animator.GetCurrentAnimatorStateInfo(0).normalizedTime >= 1)
+            {
+                entity.ChangeState(Boss_Dragon_States.Idle);
+            }          
+        }
+
+        public override void Exit(Boss_Dragon entity)
+        {
         }
     }
 }
