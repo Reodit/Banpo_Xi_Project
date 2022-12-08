@@ -1,6 +1,18 @@
 using UnityEngine;
 
-public enum Boss_Dragon_States { Idle = 0, NormalAttack, Dragon_Breath, Flying, Walk, Chase }
+public enum Boss_Dragon_States
+{
+    Idle = 0, 
+    NormalAttack, 
+    BreathOnAir, 
+    Flying, 
+    ClawAttack, 
+    Defend, 
+    BreathOnLand,
+    Die,
+    Screaming,
+    Chase
+}
 
 [RequireComponent (typeof(Animator))]
 public class Boss_Dragon : BaseGameEntity
@@ -64,12 +76,18 @@ public class Boss_Dragon : BaseGameEntity
         gameObject.name = $"{ID:D2}_Student_{name}";
 
         // Student가 가질 수 있는 상태 개수만큼 메모리 할당, 각 상태에 클래스 메모리 할당
-        states = new State[5];
+        states = new State[10];
         states[(int)Boss_Dragon_States.Idle] = new Boss_DragonStates.Idle();
         states[(int)Boss_Dragon_States.NormalAttack] = new Boss_DragonStates.NormalAttack();
-        states[(int)Boss_Dragon_States.Dragon_Breath] = new Boss_DragonStates.Dragon_Breath();
         states[(int)Boss_Dragon_States.Flying] = new Boss_DragonStates.Flying();
-        states[(int)Boss_Dragon_States.Walk] = new Boss_DragonStates.Walk();
+        states[(int)Boss_Dragon_States.Defend] = new Boss_DragonStates.Defend();
+        states[(int)Boss_Dragon_States.ClawAttack] = new Boss_DragonStates.ClawAttack();
+        states[(int)Boss_Dragon_States.Chase] = new Boss_DragonStates.Chase();
+        states[(int)Boss_Dragon_States.Die] = new Boss_DragonStates.Die();
+        states[(int)Boss_Dragon_States.Screaming] = new Boss_DragonStates.Screaming();
+        states[(int)Boss_Dragon_States.BreathOnAir] = new Boss_DragonStates.BreathOnAir();
+        states[(int)Boss_Dragon_States.BreathOnLand] = new Boss_DragonStates.BreathOnLand();
+
 
         // 기본 상태 설정
         ChangeState(Boss_Dragon_States.Idle);
