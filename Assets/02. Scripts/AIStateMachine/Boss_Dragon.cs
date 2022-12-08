@@ -13,6 +13,7 @@ public class Boss_Dragon : BaseGameEntity
     [SerializeField] private GameObject[] players;
     [SerializeField] private bool isAnimationPlaying;
     public bool isAttackEnd = false;
+    public float animationNormalValue = 0f;
 
     // Dragon이 가지고 있는 모든 상태, 현재 상태.
     private State[] states;
@@ -81,7 +82,7 @@ public class Boss_Dragon : BaseGameEntity
             playersDistance[i] = 0f;
         }
 
-        hp = 0;
+        hp = 100;
         ap = 0;
 
         minDistance = 15;
@@ -107,6 +108,11 @@ public class Boss_Dragon : BaseGameEntity
         {
             currentState.Execute(this);
         }
+    }
+
+    public void ResetNormalValue()
+    {
+        animationNormalValue = 0f;
     }
 
     public void ChangeState(Boss_Dragon_States newState)

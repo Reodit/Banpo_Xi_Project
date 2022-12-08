@@ -1,6 +1,5 @@
-using System.Xml.Linq;
-using TMPro;
 using UnityEngine;
+using System;
 
 namespace Boss_DragonStates
 {
@@ -10,25 +9,31 @@ namespace Boss_DragonStates
         {
             entity.Animator.Play("Idle");
             entity.PrintText("Idle Enter");
-            entity.PrintText($"현재 페이즈 : {entity.CurrentPhase}");
         }
 
         public override void Execute(Boss_Dragon entity)
         {
-            if (entity.MinDistance < 10f && entity.Animator.HasState(0, Animator.StringToHash("Idle")))
+            if (entity.MinDistance < 10f &&
+                entity.Animator.GetCurrentAnimatorStateInfo(0).normalizedTime >= 1f &&
+                entity.Animator.GetCurrentAnimatorStateInfo(0).IsName("Idle"))
             {
-                entity.ChangeState(Boss_Dragon_States.NormalAttack);
+                if (entity.HP < 80)
+                {
+                    entity.ChangeState(Boss_Dragon_States.Flying);
+                }
+
+                else
+                {
+                    entity.ChangeState(Boss_Dragon_States.NormalAttack);
+                }
             }
 
-
             entity.PrintText("Idle Execute");
-            entity.PrintText($"현재 페이즈 : {entity.CurrentPhase}");
         }
 
         public override void Exit(Boss_Dragon entity)
         {
             entity.PrintText("Idle Exit");
-            entity.PrintText($"현재 페이즈 : {entity.CurrentPhase}");
         }
     }
 
@@ -38,27 +43,26 @@ namespace Boss_DragonStates
         {
             entity.Animator.Play("Attack");
             entity.PrintText("NormalAttack Enter");
-            entity.PrintText($"현재 페이즈 : {entity.CurrentPhase}");
         }
 
         public override void Execute(Boss_Dragon entity)
         {
-            Debug.Log(entity.Animator.GetCurrentAnimatorStateInfo(0).normalizedTime);
-            Debug.Log(entity.MinDistance);
-
-            if (entity.MinDistance > 10f && entity.Animator.GetCurrentAnimatorStateInfo(0).normalizedTime >= 1f)
+            if (entity.Animator.GetCurrentAnimatorStateInfo(0).normalizedTime >= 1f )
             {
-                entity.ChangeState(Boss_Dragon_States.Idle);
+                if (entity.MinDistance > 10)
+                {
+                    entity.ChangeState(Boss_Dragon_States.Idle);
+
+                    entity.Animator.Play("Attack");
+                }
             }
 
-            entity.PrintText("NormalAttack Enter");
-            entity.PrintText($"현재 페이즈 : {entity.CurrentPhase}");
+            entity.PrintText("NormalAttack Execute");
         }
 
         public override void Exit(Boss_Dragon entity)
         {
-            entity.PrintText("NormalAttack Enter");
-            entity.PrintText($"현재 페이즈 : {entity.CurrentPhase}");
+            entity.PrintText("NormalAttack Exit");
         }
     }
 
@@ -82,8 +86,6 @@ namespace Boss_DragonStates
             {
                 // randIndex가 지식 수치보다 낮으면 6~10점, 지식 수치보다 높으면 1~5점
                 // 즉, 지식이 높을수록 높은 점수를 받을 확률이 높다
-                int randIndex = Random.Range(0, 10);
-                examScore = randIndex < entity.HP ? Random.Range(6, 11) : Random.Range(1, 6);
             }
 
             // 시험 점수에 따라 다음 행동 설정
@@ -114,36 +116,25 @@ namespace Boss_DragonStates
     {
         public override void Enter(Boss_Dragon entity)
         {
-
+            
+            entity.Animator.Play("Flying1");
+            entity.PrintText("Flying Enter");
         }
 
         public override void Execute(Boss_Dragon entity)
         {
-            entity.PrintText("건전하게?? 게임을 즐긴다..");
-
-            int randState = Random.Range(0, 10);
-            if (randState == 0 || randState == 9)
+            if (entity.Animator.GetCurrentAnimatorStateInfo(0).normalizedTime >= 1)
             {
-                entity.AP += 20;
-
-                // 술집에 가서 술을 마시는 "HitTheBottle" 상태로 변경
-                entity.ChangeState(Boss_Dragon_States.Walk);
+                entity.ChangeState(Boss_Dragon_States.Idle);
             }
-            else
-            {
-                entity.AP--;
 
-                if (entity.AP <= 0)
-                {
-                    // 도서관에 가서 공부를 하는 "StudyHard" 상태로 변경
-                    entity.ChangeState(Boss_Dragon_States.NormalAttack);
-                }
-            }
+            entity.PrintText("Flying Execute");
         }
 
         public override void Exit(Boss_Dragon entity)
         {
-            entity.PrintText("PC방에서 나온다.");
+            entity.animationNormalValue = 0f;
+            entity.PrintText("Flying Exit");
         }
     }
 
