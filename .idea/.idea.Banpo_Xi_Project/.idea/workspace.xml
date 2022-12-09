@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="4954b5bd-a11f-4c7b-a08d-6d1c653d97b7" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/Assets/Photon/Fusion/Resources/NetworkProjectConfig.fusion" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Photon/Fusion/Resources/NetworkProjectConfig.fusion" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="HighlightingSettingsPerFile">
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/30dfda8fa79a431d80262ee17a16696d8ee00/0d/73792149/Changed`1.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/30dfda8fa79a431d80262ee17a16696d8ee00/12/5f3b5672/NetworkTransform.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/30dfda8fa79a431d80262ee17a16696d8ee00/15/1480fded/NetworkBool.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/30dfda8fa79a431d80262ee17a16696d8ee00/21/c88adcb7/GameMode.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/30dfda8fa79a431d80262ee17a16696d8ee00/29/9c65cd44/NetworkObject.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/30dfda8fa79a431d80262ee17a16696d8ee00/2b/2fab9a1d/NetworkBehaviourCallbacks.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/30dfda8fa79a431d80262ee17a16696d8ee00/3a/6354dd49/NetworkPrefabRef.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/30dfda8fa79a431d80262ee17a16696d8ee00/49/9a4c47b5/RpcInfo.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/30dfda8fa79a431d80262ee17a16696d8ee00/4c/9ab71d20/TickTimer.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/30dfda8fa79a431d80262ee17a16696d8ee00/61/7d74798b/PlayerRef.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/30dfda8fa79a431d80262ee17a16696d8ee00/7f/de30fd52/INetworkRunnerCallbacks.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/30dfda8fa79a431d80262ee17a16696d8ee00/96/f575b784/RpcTargets.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/30dfda8fa79a431d80262ee17a16696d8ee00/a3/26a24a2d/NetworkPosition.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/30dfda8fa79a431d80262ee17a16696d8ee00/a9/6720015f/IDespawned.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/30dfda8fa79a431d80262ee17a16696d8ee00/b3/5b6299a6/RpcHostMode.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/30dfda8fa79a431d80262ee17a16696d8ee00/bb/3011808f/RpcAttribute.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/30dfda8fa79a431d80262ee17a16696d8ee00/cf/68aaff82/Behaviour.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/30dfda8fa79a431d80262ee17a16696d8ee00/da/d9b642a0/NetworkedAttribute.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/30dfda8fa79a431d80262ee17a16696d8ee00/dd/1003fb8d/INetworkInput.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/30dfda8fa79a431d80262ee17a16696d8ee00/de/f44beb45/SimulationBehaviour.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/30dfda8fa79a431d80262ee17a16696d8ee00/e5/63a2022d/NetworkRunner.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/30dfda8fa79a431d80262ee17a16696d8ee00/ea/bd214412/NetworkBehaviour.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/30dfda8fa79a431d80262ee17a16696d8ee00/f0/31c9f64f/NetworkPositionRotation.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/30dfda8fa79a431d80262ee17a16696d8ee00/f8/485714cf/ISpawned.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/30dfda8fa79a431d80262ee17a16696d8ee00/fa/886cab4e/RpcSources.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/4a31731933e0419ca5a995305014ad37157a00/34/8156cf0e/MonoBehaviour.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/4a31731933e0419ca5a995305014ad37157a00/d2/9ba24251/Mesh.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/e80a6783749b4bc0b02013caba0b7f9018e00/55/adaef278/Assert.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/02. Scripts/PhysxBall.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/Photon/Fusion/Scripts/Editor/Fusion.Editor.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Library/PackageCache/com.unity.ide.visualstudio@2.0.15/Editor/Cli.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Library/PackageCache/com.unity.ugui@1.0.0/Tests/Runtime/ScrollRect/ScrollRectTests.cs" root0="SKIP_HIGHLIGHTING" />
+  </component>
+  <component name="MarkdownSettingsMigration">
+    <option name="stateVersion" value="1" />
+  </component>
+  <component name="ProjectId" id="2IZ0ri9oF3NmwTOGeHoefkMVLdQ" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;Discover.Launch.Via.Unity&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;File.Encoding&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  }
+}</component>
+  <component name="RunManager" selected="Attach to Unity Editor.Attach to Unity Editor">
+    <configuration name="UnitTests (batch mode)" type="RunUnityExe" factoryName="Unity Executable">
+      <option name="EXE_PATH" value="C:\Program Files\Unity\Hub\Editor\2021.3.5f1\Editor\Unity.exe" />
+      <option name="PROGRAM_PARAMETERS" value="-runTests -batchmode -projectPath C:\Users\jjc62\OneDrive\문서\GitHub\Banpo_Xi_Project -testResults Logs/results.xml -testPlatform EditMode -debugCodeOptimization" />
+      <option name="WORKING_DIRECTORY" value="C:\Users\jjc62\OneDrive\문서\GitHub\Banpo_Xi_Project" />
+      <option name="PASS_PARENT_ENVS" value="1" />
+      <option name="USE_EXTERNAL_CONSOLE" value="0" />
+      <method v="2" />
+    </configuration>
+    <configuration name="Attach to Unity Editor &amp; Play" type="UNITY_DEBUG_RUN_CONFIGURATION" factoryName="UNITY_ATTACH_AND_PLAY" show_console_on_std_err="false" show_console_on_std_out="false" port="50000" address="localhost">
+      <option name="allowRunningInParallel" value="false" />
+      <option name="listenPortForConnections" value="false" />
+      <option name="pid" />
+      <option name="projectPathOnTarget" />
+      <option name="selectedOptions">
+        <list />
+      </option>
+      <method v="2" />
+    </configuration>
+    <configuration name="Attach to Unity Editor" type="UNITY_DEBUG_RUN_CONFIGURATION" factoryName="Unity Debug" show_console_on_std_err="false" show_console_on_std_out="false" port="50000" address="localhost">
+      <option name="allowRunningInParallel" value="false" />
+      <option name="listenPortForConnections" value="false" />
+      <option name="pid" />
+      <option name="projectPathOnTarget" />
+      <option name="selectedOptions">
+        <list />
+      </option>
+      <method v="2" />
+    </configuration>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="4954b5bd-a11f-4c7b-a08d-6d1c653d97b7" name="Changes" comment="" />
+      <created>1670374001257</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1670374001257</updated>
+      <workItem from="1670374001352" duration="23096000" />
+      <workItem from="1670458421593" duration="6703000" />
+      <workItem from="1670489626314" duration="5001000" />
+      <workItem from="1670498708651" duration="251000" />
+      <workItem from="1670499155207" duration="608000" />
+      <workItem from="1670544521740" duration="6696000" />
+      <workItem from="1670566436459" duration="8894000" />
+      <workItem from="1670576919193" duration="628000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+  <component name="UnityCheckinConfiguration" checkUnsavedScenes="true" />
+  <component name="UnityProjectConfiguration" hasMinimizedUI="true" />
+  <component name="UnityUnitTestConfiguration" currentTestLauncher="EditMode" />
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+  <component name="VcsManagerConfiguration">
+    <option name="CLEAR_INITIAL_COMMIT_MESSAGE" value="true" />
+  </component>
+  <component name="XSLT-Support.FileAssociations.UIState">
+    <expand />
+    <select />
+  </component>
+</project>
