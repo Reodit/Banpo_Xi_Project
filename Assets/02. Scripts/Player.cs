@@ -136,6 +136,7 @@ public class Player : NetworkBehaviour
                             // Initialize the Ball before synchronizing it
                             o.GetComponent<Ball>().Init();
                         });
+                    spawned = !spawned;
                 }
                 else if ((data.buttons & NetworkInputData.MOUSEBUTTON2) != 0)
                 {
@@ -149,7 +150,6 @@ public class Player : NetworkBehaviour
                             o.GetComponent<PhysxBall>().Init( 10*_forward );
                         });
                 }
-                spawned = !spawned;
             }
         }
     }

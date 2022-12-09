@@ -5,7 +5,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="4954b5bd-a11f-4c7b-a08d-6d1c653d97b7" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/Assets/Photon/Fusion/Resources/NetworkProjectConfig.fusion" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Photon/Fusion/Resources/NetworkProjectConfig.fusion" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/02. Scripts/Player.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/02. Scripts/Player.cs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -42,6 +42,7 @@
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/4a31731933e0419ca5a995305014ad37157a00/d2/9ba24251/Mesh.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/e80a6783749b4bc0b02013caba0b7f9018e00/55/adaef278/Assert.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/02. Scripts/PhysxBall.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/02. Scripts/Player.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Photon/Fusion/Scripts/Editor/Fusion.Editor.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Library/PackageCache/com.unity.ide.visualstudio@2.0.15/Editor/Cli.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Library/PackageCache/com.unity.ugui@1.0.0/Tests/Runtime/ScrollRect/ScrollRectTests.cs" root0="SKIP_HIGHLIGHTING" />
