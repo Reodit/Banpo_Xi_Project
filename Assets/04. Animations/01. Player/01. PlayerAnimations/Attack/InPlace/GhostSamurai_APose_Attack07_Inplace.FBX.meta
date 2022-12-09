@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: ac976e39539d3ae41aaae9815e9a2b4c
+guid: 4dabc09e60912d84b8441f51b8add125
 ModelImporter:
   serializedVersion: 23
   fileIDToRecycleName:
@@ -163,7 +163,7 @@ ModelImporter:
     400154: Weapon_l
     400156: Weapon_r
     400158: root
-    7400000: GhostSamurai_APose_JumpAttack03_Root_1
+    7400000: GhostSamurai_APose_Attack07_Inplace
     9500000: //RootNode
     2186277476908879412: ImportLogs
   externalObjects: {}
@@ -181,12 +181,11 @@ ModelImporter:
     rigImportErrors: 
     rigImportWarnings: "Copied Avatar Rig Configuration mis-match. Bone length in
       copied configuration does not match position in animation file:\n\t'calf_r'
-      : position error = 1.250046 mm\n\t'foot_r' : position error = 2.047067 mm\n"
+      : position error = 1.250046 mm\n\t'foot_r' : position error = 2.048039 mm\n"
     animationImportErrors: 
-    animationImportWarnings: "\nClip 'GhostSamurai_APose_JumpAttack03_Root_1' has
-      import animation warnings that might lower retargeting quality:\nNote: Activate
-      translation DOF on avatar to improve retargeting quality.\n\t'spine_01' has
-      translation animation that will be discarded.\n\t'spine_02' has translation
+    animationImportWarnings: "\nClip 'GhostSamurai_APose_Attack07_Inplace' has import
+      animation warnings that might lower retargeting quality:\nNote: Activate translation
+      DOF on avatar to improve retargeting quality.\n\t'spine_02' has translation
       animation that will be discarded.\n\t'spine_03' has translation animation that
       will be discarded.\n\t'clavicle_l' has translation animation that will be discarded.\n\t'upperarm_l'
       has translation animation that will be discarded.\n\t'lowerarm_l' has translation
@@ -206,17 +205,12 @@ ModelImporter:
       be discarded.\n\t'clavicle_r' has translation animation that will be discarded.\n\t'upperarm_r'
       has translation animation that will be discarded.\n\t'lowerarm_r' has translation
       animation that will be discarded.\n\t'hand_r' has translation animation that
-      will be discarded.\n\t'index_01_r' has translation animation that will be discarded.\n\t'middle_01_r'
-      has translation animation that will be discarded.\n\t'pinky_01_r' has translation
-      animation that will be discarded.\n\t'ring_01_r' has translation animation that
-      will be discarded.\n\t'thumb_01_r' has translation animation that will be discarded.\n\t'thumb_02_r'
-      has translation animation that will be discarded.\n\t'thumb_03_r' has translation
-      animation that will be discarded.\n\t'head' has translation animation that will
-      be discarded.\n\t'calf_l' has translation animation that will be discarded.\n\t'foot_l'
-      has translation animation that will be discarded.\n\t'ball_l' has translation
-      animation that will be discarded.\n\t'calf_r' has translation animation that
-      will be discarded.\n\t'foot_r' has translation animation that will be discarded.\n\t'ball_r'
-      has translation animation that will be discarded.\n"
+      will be discarded.\n\t'head' has translation animation that will be discarded.\n\t'calf_l'
+      has translation animation that will be discarded.\n\t'foot_l' has translation
+      animation that will be discarded.\n\t'ball_l' has translation animation that
+      will be discarded.\n\t'calf_r' has translation animation that will be discarded.\n\t'foot_r'
+      has translation animation that will be discarded.\n\t'ball_r' has translation
+      animation that will be discarded.\n"
     animationRetargetingWarnings: 
     animationDoRetargetingWarnings: 0
     importAnimatedCustomProperties: 0
@@ -230,10 +224,10 @@ ModelImporter:
     extraUserProperties: []
     clipAnimations:
     - serializedVersion: 16
-      name: GhostSamurai_APose_JumpAttack03_Root_1
-      takeName: GhostSamurai_APose_JumpAttack03_Root_1
+      name: GhostSamurai_APose_Attack07_Inplace
+      takeName: GhostSamurai_APose_Attack07_Inplace
       firstFrame: 0
-      lastFrame: 380
+      lastFrame: 276
       wrapMode: 0
       orientationOffsetY: 0
       level: 0
@@ -244,7 +238,7 @@ ModelImporter:
       loopBlend: 0
       loopBlendOrientation: 1
       loopBlendPositionY: 1
-      loopBlendPositionXZ: 0
+      loopBlendPositionXZ: 1
       keepOriginalOrientation: 1
       keepOriginalPositionY: 1
       keepOriginalPositionXZ: 1

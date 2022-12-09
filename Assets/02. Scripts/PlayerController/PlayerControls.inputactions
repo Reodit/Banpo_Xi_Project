@@ -13,15 +13,6 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
-                },
-                {
-                    "name": "Camera",
-                    "type": "PassThrough",
-                    "id": "63e928dd-5da9-4bf0-9a5a-b5d5a70d990b",
-                    "expectedControlType": "",
-                    "processors": "",
-                    "interactions": "",
-                    "initialStateCheck": false
                 }
             ],
             "bindings": [
@@ -79,15 +70,32 @@
                     "action": "Movement",
                     "isComposite": false,
                     "isPartOfComposite": true
-                },
+                }
+            ]
+        },
+        {
+            "name": "Player Actions",
+            "id": "a9119108-e6d0-4863-8161-fce745903f8b",
+            "actions": [
+                {
+                    "name": "Dash",
+                    "type": "Button",
+                    "id": "14201c24-7d6b-4da9-9e67-1e93fe93860a",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                }
+            ],
+            "bindings": [
                 {
                     "name": "",
-                    "id": "d2b2602d-99ae-4169-918b-78f126aed35b",
-                    "path": "<Mouse>/delta",
+                    "id": "9656ebb3-e1d0-43d7-b77a-4b955ccbc3ea",
+                    "path": "<Keyboard>/leftShift",
                     "interactions": "",
-                    "processors": "NormalizeVector2",
+                    "processors": "",
                     "groups": "",
-                    "action": "Camera",
+                    "action": "Dash",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

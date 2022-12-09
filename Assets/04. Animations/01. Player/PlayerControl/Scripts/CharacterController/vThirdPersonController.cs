@@ -139,33 +139,23 @@ namespace Invector.vCharacterController
             if (input.sqrMagnitude < 0.1f)
                 animator.CrossFadeInFixedTime("Jump", 0.1f);
             else
-                animator.CrossFadeInFixedTime("JumpMove", .2f);
+                animator.CrossFadeInFixedTime("JumpMove", 0.1f);
         }
 
         public virtual void Dash()
         {
             dashCounter = dashTimer;
             isDashing = true;
-
+            isAttacking = false;
             animator.CrossFadeInFixedTime("Dash", 0.1f);
+            animator.ResetTrigger("Attack");
         }
         public virtual void Attack()
         {
             attackCounter = attackTimer;
+            isAttacking = true;
 
-            if (!isAttacking)
-            {
-                isAttacking = true;
-                attackIndex = Random.Range(1, 4);
-                animator.SetTrigger("Attack" + attackIndex);
-            }
-
-            if (animator.GetCurrentAnimatorStateInfo(0).IsTag("Attack"))
-            {
-                
-                animator.SetTrigger("Attack");
-                
-            }
+            animator.SetTrigger("Attack");
         }
     }
 }

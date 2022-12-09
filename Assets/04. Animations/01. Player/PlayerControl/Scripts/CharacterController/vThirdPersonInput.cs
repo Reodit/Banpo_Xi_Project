@@ -14,6 +14,7 @@ namespace Invector.vCharacterController
         public KeyCode sprintInput = KeyCode.LeftShift;
         public KeyCode dashInput = KeyCode.Mouse1;
         public KeyCode attackInput = KeyCode.Mouse0;
+        public KeyCode skillQInput = KeyCode.Q;
 
         [Header("Camera Input")]
         public string rotateCameraXInput = "Mouse X";
@@ -143,11 +144,15 @@ namespace Invector.vCharacterController
         }
         protected virtual bool DashConditions()
         {
-            return !cc.stopMove && !cc.isDashing;
+            return !cc.isDashing;
         }
         protected virtual bool AttackConditions()
         {
-            return !cc.stopMove && !cc.isJumping;
+            return !cc.isJumping && !cc.isDashing;
+        }
+        protected virtual bool SkillQConditions()
+        {
+            return !cc.isJumping && !cc.isDashing && cc.isGrounded;
         }
 
         /// <summary>
@@ -164,14 +169,13 @@ namespace Invector.vCharacterController
                 cc.Dash();
         }
 
-
         protected virtual void AttackInput()
         {
-            if (Input.GetKeyDown(attackInput) && AttackConditions())
+            if (Input.GetKey(attackInput) && AttackConditions())
             {
                 cc.Attack();
             }
-        }
+        }        
         #endregion       
     }
 }

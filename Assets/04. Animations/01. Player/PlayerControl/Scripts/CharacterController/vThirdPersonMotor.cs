@@ -59,7 +59,8 @@ namespace Invector.vCharacterController
         [Header("- Action")]
         public float dashTimer = 0.3f;
         public float attackTimer = 0.5f;
-        public int attackIndex = 0;
+        public float skillQTimer = 0.3f;
+
 
         #endregion
 
@@ -77,7 +78,8 @@ namespace Invector.vCharacterController
         // movement bools
         internal bool isJumping;
         internal bool isDashing;
-        internal bool isAttacking;
+        [SerializeField] internal bool isAttacking;
+        [SerializeField] internal bool isSkillQ;
         internal bool isStrafing
         {
             get
@@ -103,10 +105,11 @@ namespace Invector.vCharacterController
         internal float jumpCounter;                         // used to count the routine to reset the jump
         internal float dashCounter;                        // used to count the routine to reset the dash
         internal float attackCounter;
+        internal float skillQCounter;
         internal float groundDistance;                      // used to know the distance from the ground
         internal RaycastHit groundHit;                      // raycast to hit the ground 
-        internal bool lockMovement = false;                 // lock the movement of the controller (not the animation)
-        internal bool lockRotation = false;                 // lock the rotation of the controller (not the animation)        
+        [SerializeField] internal bool lockMovement = false;                 // lock the movement of the controller (not the animation)
+        [SerializeField] internal bool lockRotation = false;                 // lock the rotation of the controller (not the animation)        
         internal bool _isStrafing;                          // internally used to set the strafe movement                
         internal Transform rotateTarget;                    // used as a generic reference for the camera.transform
         internal Vector3 input;                             // generate raw input for the controller
@@ -247,23 +250,23 @@ namespace Invector.vCharacterController
 
         #endregion
 
-        #region Attack Methods{
+        #region Attack Methods
         protected virtual void ControlAttackBehaviour()
         {
             if (!isAttacking) return;
-
+            
             attackCounter -= Time.deltaTime;
-            if(attackCounter <= 0)
+            stopMove = true;
+            if (attackCounter <= 0)
             {
                 attackCounter = 0;
-                attackIndex = 0;
                 isAttacking = false;
+                stopMove = false;
                 animator.ResetTrigger("Attack");
-                
-
             }
         }
         #endregion
+
 
         #region Dash Methods
         protected virtual void ControlDashBehaviour()
@@ -373,6 +376,8 @@ namespace Invector.vCharacterController
             _capsuleCollider.material = (isGrounded && GroundAngle() <= slopeLimit + 1) ? frictionPhysics : slippyPhysics;
 
             if (isGrounded && input == Vector3.zero)
+                _capsuleCollider.material = maxFrictionPhysics;
+            else if (isGrounded && isAttacking)
                 _capsuleCollider.material = maxFrictionPhysics;
             else if (isGrounded && input != Vector3.zero)
                 _capsuleCollider.material = frictionPhysics;
