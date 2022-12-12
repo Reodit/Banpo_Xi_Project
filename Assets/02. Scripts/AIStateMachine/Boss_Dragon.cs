@@ -15,7 +15,7 @@ public enum Boss_Dragon_States
     Chase
 }
 
-[RequireComponent (typeof(Animator))]
+//[RequireComponent (typeof(Animator))]
 public class Boss_Dragon : BaseGameEntity
 {
     [SerializeField] private int hp;            // 체력
