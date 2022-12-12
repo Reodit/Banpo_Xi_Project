@@ -1,9 +1,10 @@
 ﻿using Unity.VisualScripting;
 using UnityEngine;
+using Fusion;
 
 namespace Invector.vCharacterController
 {
-    public class vThirdPersonMotor : MonoBehaviour
+    public class vThirdPersonMotor : NetworkBehaviour//MonoBehaviour
     {
         #region Inspector Variables
 
@@ -119,6 +120,11 @@ namespace Invector.vCharacterController
 
         #endregion
 
+
+        // OUTPUT SYNC VARIABLES
+        public Vector3 dataVelocity = Vector3.zero;
+        public Vector3 dataDirection = Vector3.zero;
+
         public void Init()
         {
             animator = GetComponent<Animator>();
@@ -159,6 +165,7 @@ namespace Invector.vCharacterController
             isGrounded = true;
         }
 
+
         public virtual void UpdateMotor()
         {
             CheckGround();
@@ -167,6 +174,15 @@ namespace Invector.vCharacterController
             ControlJumpBehaviour();
             ControlDashBehaviour();
             AirControl();
+        }
+
+        public Vector3 GetVelocity()
+        {            
+            return dataVelocity;
+        }
+        public Vector3 GetDirection()
+        {
+            return dataDirection;
         }
 
         #region Locomotion
@@ -199,6 +215,8 @@ namespace Invector.vCharacterController
             bool useVerticalVelocity = true;
             if (useVerticalVelocity) targetVelocity.y = _rigidbody.velocity.y;
             _rigidbody.velocity = targetVelocity;
+            dataVelocity = targetVelocity;
+            dataDirection = _direction;
         }
 
 

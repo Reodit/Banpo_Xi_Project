@@ -1,10 +1,11 @@
-﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
 using Fusion;
 
 namespace Invector.vCharacterController
 {
-    public class vThirdPersonInput : MonoBehaviour
+    public class vNThirdPersonInput : NetworkBehaviour
     {
         #region Variables       
 
@@ -30,11 +31,9 @@ namespace Invector.vCharacterController
 
         protected virtual void Start()
         {
-            Debug.Log("Start");
             InitilizeController();
             InitializeTpCamera();
             Cursor.lockState = CursorLockMode.Locked;
-
         }
 
         protected virtual void FixedUpdate()
@@ -44,9 +43,21 @@ namespace Invector.vCharacterController
             cc.ControlRotationType();       // handle the controller rotation type
         }
 
+        public override void FixedUpdateNetwork()
+        {
+            //    cc.UpdateMotor();               // updates the ThirdPersonMotor methods
+            //    cc.ControlLocomotionType();     // handle the controller locomotion type and movespeed
+            //    cc.ControlRotationType();       // handle the controller rotation type
+
+            InputHandle();                  // update the input methods
+            cc.UpdateAnimator();            // updates the Animator Parameters
+            //cc.CursorManager();
+        }
+
+
         protected virtual void Update()
         {
-            InputHandle();                  // update the input methods
+            //InputHandle();                  // update the input methods
             cc.UpdateAnimator();            // updates the Animator Parameters
             cc.CursorManager();
         }
@@ -83,31 +94,44 @@ namespace Invector.vCharacterController
         }
         protected virtual void InputHandle()
         {
-            MoveInput();
-            CameraInput();
-            SprintInput();
-            StrafeInput();
-            JumpInput();
-            DashInput();
-            AttackInput();
+            if (cc && GetInput(out NetworkInputData data))
+            {
+                MoveInput(data);
+                CameraInput();
+                SprintInput(data);
+                StrafeInput(data);
+                JumpInput();
+                DashInput();
+                AttackInput();
+            }
         }
 
-        public virtual void MoveInput()
+        public virtual void MoveInput(NetworkInputData data)
+        {           
+            //cc.input.x = Input.GetAxis(horizontalInput);
+            //cc.input.z = Input.GetAxis(verticallInput);
+
+            cc.input.x = data.xAxis;
+            cc.input.z = data.zAxis;
+        }
+        IEnumerator WaitForCamera()
         {
-            cc.input.x = Input.GetAxis(horizontalInput);
-            cc.input.z = Input.GetAxis(verticallInput);
+            yield return new WaitUntil(() => Camera.main != null);
+            yield return new WaitUntil(() => cc != null);
+            cameraMain = Camera.main;
+            cc.rotateTarget = cameraMain.transform;
         }
-
         protected virtual void CameraInput()
         {
             if (!cameraMain)
             {
-                if (!Camera.main) Debug.Log("Missing a Camera with the tag MainCamera, please add one.");
-                else
-                {
-                    cameraMain = Camera.main;
-                    cc.rotateTarget = cameraMain.transform;
-                }
+                StartCoroutine(WaitForCamera());
+                //if (!Camera.main) Debug.Log("Missing a Camera with the tag MainCamera, please add one.");
+                //else
+                //{
+                //    cameraMain = Camera.main;
+                //    cc.rotateTarget = cameraMain.transform;
+                //}
             }
 
             if (cameraMain)
@@ -124,18 +148,20 @@ namespace Invector.vCharacterController
             tpCamera.RotateCamera(X, Y);
         }
 
-        protected virtual void StrafeInput()
+        protected virtual void StrafeInput(NetworkInputData data)
         {
-            if (Input.GetKeyDown(strafeInput))
+            if (data.strafe)
                 cc.Strafe();
         }
 
-        protected virtual void SprintInput()
+        protected virtual void SprintInput(NetworkInputData data)
         {
-            if (Input.GetKeyDown(sprintInput))
-                cc.Sprint(true);
-            else if (Input.GetKeyUp(sprintInput))
-                cc.Sprint(false);
+            //if (Input.GetKeyDown(sprintInput))
+            //    cc.Sprint(true);
+            //else if (Input.GetKeyUp(sprintInput))
+            //    cc.Sprint(false);
+
+            cc.Sprint(data.sprint);
         }
 
         /// <summary>
@@ -179,7 +205,7 @@ namespace Invector.vCharacterController
             {
                 cc.Attack();
             }
-        }        
-        #endregion       
+        }
+        #endregion
     }
 }
