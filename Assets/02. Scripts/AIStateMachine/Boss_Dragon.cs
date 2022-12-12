@@ -1,4 +1,7 @@
+using System;
+using System.Collections;
 using UnityEngine;
+using UnityEngine.AI;
 
 public enum Boss_Dragon_States
 {
@@ -14,19 +17,19 @@ public enum Boss_Dragon_States
     Chase
 }
 
-[RequireComponent (typeof(Animator))]
+
+[RequireComponent (typeof(NavMeshAgent))]
 public class Boss_Dragon : BaseGameEntity
 {
     [SerializeField] private int hp;            // 체력
     [SerializeField] private int ap;            // 공격력 
     [SerializeField] private Phase currentPhase;                 // 현재 페이즈
-    [SerializeField] private float[] playersDistance;
-    [SerializeField] private float minDistance;
     [SerializeField] private GameObject[] players;
-    [SerializeField] private bool isAnimationPlaying;
-    public bool isAttackEnd = false;
-    public float animationNormalValue = 0f;
-
+    [SerializeField] private EnemyAggroformat mEnemyAggroformat;
+    private const float calculateDestinationterm = 0.2f;
+    public EnemyAggro mEnemyAggro { get; private set; }
+    public NavMeshAgent mNavMeshAgent { get; private set; }
+    public bool isArrivedtoTarget { get; private set; }
     // Dragon이 가지고 있는 모든 상태, 현재 상태.
     private State[] states;
     private State currentState;
@@ -50,21 +53,17 @@ public class Boss_Dragon : BaseGameEntity
         get => currentPhase;
     }
 
-    public float MinDistance
-    {
-        private set => minDistance = value;
-        get => minDistance;
-    }
-
-    public bool IsAnimationPlaying
-    {
-        private set => isAnimationPlaying = value;
-        get => isAnimationPlaying;
-    }
     public Animator Animator
     {
         private set => animator = value;
         get => animator;
+    }
+
+    private void Awake()
+    {
+        animator = GetComponentInChildren<Animator>();
+        mNavMeshAgent = GetComponent<NavMeshAgent>();
+
     }
 
     public override void Setup(string name)
@@ -88,49 +87,46 @@ public class Boss_Dragon : BaseGameEntity
         states[(int)Boss_Dragon_States.BreathOnAir] = new Boss_DragonStates.BreathOnAir();
         states[(int)Boss_Dragon_States.BreathOnLand] = new Boss_DragonStates.BreathOnLand();
 
+        for (int i = 0; i < players.Length; ++i)
+        {
+            players[i] = Instantiate(players[i], this.transform.position + new Vector3(0, 0, 10), Quaternion.identity);
+        }
+        
+        mEnemyAggro = new EnemyAggro(null, players);
+        mEnemyAggro.InitCurrentPlayers();
 
         // 기본 상태 설정
         ChangeState(Boss_Dragon_States.Idle);
 
-        playersDistance = new float[players.Length];
-
-        for (int i = 0; i < players.Length; ++i)
-        {
-            players[i] = Instantiate(players[i], new Vector3(0, 0, 20), Quaternion.identity);
-            playersDistance[i] = 0f;
-        }
-
         hp = 100;
         ap = 0;
-
-        minDistance = 15;
-        animator = GetComponent<Animator>();
         currentPhase = Phase.Normal;
+        Debug.Log("SetUpComplete");
     }
 
+    public IEnumerator UpdateDestination()
+    {
+        isArrivedtoTarget = false;
+        while (mNavMeshAgent.remainingDistance > Double.Epsilon)
+        {
+            mNavMeshAgent.SetDestination(mEnemyAggro.Target.transform.position);
+            yield return new WaitForSeconds(calculateDestinationterm);
+        }
+        
+        isArrivedtoTarget = true;
+    }
+    
     public override void Updated()
     {
-        for (int i = 0; i < players.Length; i++)
-        {
-            if (players.Length == 0)
-            {
-                Debug.LogError("Player is null");
-            }
-
-            playersDistance[i] = Vector3.Distance(this.transform.position, players[i].transform.position);
-        }
-
-        minDistance = Mathf.Min(playersDistance);
-
         if (currentState != null)
         {
             currentState.Execute(this);
         }
     }
 
-    public void ResetNormalValue()
+    public void SetCurrentTarget()
     {
-        animationNormalValue = 0f;
+        mEnemyAggro.SetTarget(mEnemyAggroformat, this.transform.position);
     }
 
     public void ChangeState(Boss_Dragon_States newState)

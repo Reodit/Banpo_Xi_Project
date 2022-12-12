@@ -13,9 +13,13 @@ namespace Boss_DragonStates
 
         public override void Execute(Boss_Dragon entity)
         {
-            if (entity.MinDistance < 10f &&
-                entity.Animator.GetCurrentAnimatorStateInfo(0).normalizedTime >= 1f &&
-                entity.Animator.GetCurrentAnimatorStateInfo(0).IsName("Idle"))
+            if (!entity.mEnemyAggro.Target)
+            {
+                entity.SetCurrentTarget();
+            }
+            
+            if (entity.Animator.GetCurrentAnimatorStateInfo(0).normalizedTime >= 1f &&
+                entity.mEnemyAggro.Target)
             {
                 if (entity.HP < 80 &&
                     entity.HP >= 70)
@@ -145,7 +149,6 @@ namespace Boss_DragonStates
 
         public override void Exit(Boss_Dragon entity)
         {
-            entity.animationNormalValue = 0f;
             entity.PrintText("Flying Exit");
         }
     }
@@ -255,13 +258,14 @@ namespace Boss_DragonStates
         public override void Enter(Boss_Dragon entity)
         {
             entity.Animator.Play("Chase1");
+            entity.StartCoroutine(entity.UpdateDestination());
         }
 
         public override void Execute(Boss_Dragon entity)
         {
             if (entity.Animator.GetCurrentAnimatorStateInfo(0).normalizedTime >= 1)
             {
-                entity.ChangeState(Boss_Dragon_States.Idle);
+                entity.ChangeState(Boss_Dragon_States.NormalAttack);
             }          
         }
 

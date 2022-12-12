@@ -2144,8 +2144,9 @@ Transform:
   - {fileID: 434816}
   - {fileID: 439352}
   - {fileID: 478366}
+  - {fileID: 494732}
   m_Father: {fileID: 480080}
-  m_RootOrder: 1
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &159226
 GameObject:
@@ -2949,6 +2950,7 @@ GameObject:
   m_Component:
   - component: {fileID: 494732}
   - component: {fileID: 13717352}
+  - component: {fileID: 1122617485343134016}
   m_Layer: 0
   m_Name: Dragon
   m_TagString: Untagged
@@ -2963,13 +2965,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 177498}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.01, y: 0.01, z: 0.01}
+  m_LocalRotation: {x: -0.076412596, y: -0.702966, z: -0.076412596, w: 0.702966}
+  m_LocalPosition: {x: -171.99362, y: -179.47954, z: -0.000011920929}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 480080}
-  m_RootOrder: 0
+  m_Father: {fileID: 442472}
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!137 &13717352
 SkinnedMeshRenderer:
@@ -3143,6 +3145,20 @@ SkinnedMeshRenderer:
     m_Center: {x: -33.476685, y: 41.865738, z: 26.524048}
     m_Extent: {x: 774.87854, y: 299.23724, z: 584.7963}
   m_DirtyAABB: 0
+--- !u!64 &1122617485343134016
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 177498}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 4
+  m_Convex: 0
+  m_CookingOptions: 30
+  m_Mesh: {fileID: 4300000, guid: 79b50b34e44b5fd4db1cdc9535a3c86b, type: 3}
 --- !u!1 &177500
 GameObject:
   m_ObjectHideFlags: 0
@@ -3988,8 +4004,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 480080}
-  - component: {fileID: 9535974}
   - component: {fileID: 663909172426710797}
+  - component: {fileID: 521491593519360556}
   m_Layer: 0
   m_Name: Blue
   m_TagString: Untagged
@@ -4009,12 +4025,34 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 494732}
   - {fileID: 442472}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!95 &9535974
+--- !u!114 &663909172426710797
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 194904}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3f30d21ee6bee4a8cac7ba47ff7e18f0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  hp: 0
+  ap: 0
+  currentPhase: 0
+  playersDistance: []
+  minDistance: 0
+  players:
+  - {fileID: 8121769020295867995, guid: 5951124b400527f4c9452be281c5cfe3, type: 3}
+  isAnimationPlaying: 0
+  isAttackEnd: 0
+  animationNormalValue: 0
+  animator: {fileID: 0}
+--- !u!95 &521491593519360556
 Animator:
   serializedVersion: 4
   m_ObjectHideFlags: 0
@@ -4034,28 +4072,6 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
---- !u!114 &663909172426710797
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 194904}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3f30d21ee6bee4a8cac7ba47ff7e18f0, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  hp: 0
-  ap: 0
-  currentPhase: 0
-  minDistance: 0
-  players:
-  - {fileID: 4564544676406223089, guid: 068724c5908e84cf7aab2fbbfe5bec91, type: 3}
-  - {fileID: 4564544676406223089, guid: 068724c5908e84cf7aab2fbbfe5bec91, type: 3}
-  isAnimationPlaying: 0
-  isAttackEnd: 0
-  animator: {fileID: 9535974}
 --- !u!1 &196352
 GameObject:
   m_ObjectHideFlags: 0
