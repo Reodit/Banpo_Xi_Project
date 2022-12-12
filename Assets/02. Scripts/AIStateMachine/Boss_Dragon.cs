@@ -1,5 +1,6 @@
 using System;
 using System.Collections;
+using Boss_DragonStates;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -30,6 +31,10 @@ public class Boss_Dragon : BaseGameEntity
     public EnemyAggro mEnemyAggro { get; private set; }
     public NavMeshAgent mNavMeshAgent { get; private set; }
     public bool isArrivedtoTarget { get; private set; }
+    [SerializeField] private float stopDistance = 5f;
+    public float idleTime = 3f;
+    public float minAttackRange = 3f;
+    
     // Dragon이 가지고 있는 모든 상태, 현재 상태.
     private State[] states;
     private State currentState;
@@ -86,7 +91,7 @@ public class Boss_Dragon : BaseGameEntity
         states[(int)Boss_Dragon_States.Screaming] = new Boss_DragonStates.Screaming();
         states[(int)Boss_Dragon_States.BreathOnAir] = new Boss_DragonStates.BreathOnAir();
         states[(int)Boss_Dragon_States.BreathOnLand] = new Boss_DragonStates.BreathOnLand();
-
+        
         for (int i = 0; i < players.Length; ++i)
         {
             players[i] = Instantiate(players[i], this.transform.position + new Vector3(0, 0, 10), Quaternion.identity);
@@ -104,16 +109,26 @@ public class Boss_Dragon : BaseGameEntity
         Debug.Log("SetUpComplete");
     }
 
-    public IEnumerator UpdateDestination()
+    private IEnumerator UpdateDestination()
     {
         isArrivedtoTarget = false;
-        while (mNavMeshAgent.remainingDistance > Double.Epsilon)
+        mNavMeshAgent.SetDestination(mEnemyAggro.Target.transform.position);
+
+        while (mNavMeshAgent.remainingDistance > 0.1f)
         {
+            Debug.Log("in Coroutine");
+            Debug.Log(mNavMeshAgent.remainingDistance);
             mNavMeshAgent.SetDestination(mEnemyAggro.Target.transform.position);
             yield return new WaitForSeconds(calculateDestinationterm);
         }
-        
+
         isArrivedtoTarget = true;
+        Debug.Log("out Coroutine");
+    }
+    
+    public void DestinationCoroutineStart()
+    {
+        StartCoroutine(UpdateDestination());
     }
     
     public override void Updated()

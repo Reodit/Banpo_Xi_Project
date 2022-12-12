@@ -1,5 +1,6 @@
 using UnityEngine;
 using System;
+using Cinemachine;
 
 namespace Boss_DragonStates
 {
@@ -7,18 +8,14 @@ namespace Boss_DragonStates
     {
         public override void Enter(Boss_Dragon entity)
         {
-            entity.Animator.Play("Idle");
             entity.PrintText("Idle Enter");
+            entity.Animator.Play("Idle");
+            entity.SetCurrentTarget();
         }
 
         public override void Execute(Boss_Dragon entity)
         {
-            if (!entity.mEnemyAggro.Target)
-            {
-                entity.SetCurrentTarget();
-            }
-            
-            if (entity.Animator.GetCurrentAnimatorStateInfo(0).normalizedTime >= 1f &&
+            if (entity.Animator.GetCurrentAnimatorStateInfo(0).normalizedTime >= entity.idleTime &&
                 entity.mEnemyAggro.Target)
             {
                 if (entity.HP < 80 &&
@@ -257,16 +254,17 @@ namespace Boss_DragonStates
     {
         public override void Enter(Boss_Dragon entity)
         {
+            entity.PrintText("StartChase");
             entity.Animator.Play("Chase1");
-            entity.StartCoroutine(entity.UpdateDestination());
+            entity.DestinationCoroutineStart();
         }
 
         public override void Execute(Boss_Dragon entity)
         {
-            if (entity.Animator.GetCurrentAnimatorStateInfo(0).normalizedTime >= 1)
+            if (entity.mNavMeshAgent.remainingDistance <= 0.1f)
             {
                 entity.ChangeState(Boss_Dragon_States.NormalAttack);
-            }          
+            }
         }
 
         public override void Exit(Boss_Dragon entity)

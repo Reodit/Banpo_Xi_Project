@@ -63,8 +63,8 @@ public class EnemyAggro
         }
 
         Target = playerDistanceInfo.FirstOrDefault(x => x.Value == playerDistanceInfo.Values.Min()).Key;
-        //Debug.Log(" 타겟 :  " + Target);
-        //Debug.Log(" 적 좌표 : " + enemyPosition + "   " + " 플레이어와의 거리 : " + Target.transform.position);
+        Debug.Log(" 타겟 :  " + Target);
+        Debug.Log(" 적 좌표 : " + enemyPosition + "   " + " 플레이어와의 거리 : " + Target.transform.position);
     }
     private void SetAggroBySpecificPlayer(int SpecificPlayerNum)
     {
