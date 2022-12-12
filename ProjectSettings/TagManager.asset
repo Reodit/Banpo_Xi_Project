@@ -5,6 +5,9 @@ TagManager:
   serializedVersion: 2
   tags:
   - Fire
+  - Portal
+  - ManaSprite
+  - HealthSprite
   layers:
   - Default
   - TransparentFX
@@ -14,8 +17,8 @@ TagManager:
   - UI
   - 
   - 
-  - 
-  - 
+  - FireLayer
+  - Player
   - Controller
   - 
   - 
