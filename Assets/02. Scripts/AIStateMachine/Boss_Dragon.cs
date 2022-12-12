@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 public enum Boss_Dragon_States
@@ -67,6 +68,11 @@ public class Boss_Dragon : BaseGameEntity
         get => animator;
     }
 
+    private void Awake()
+    {
+        animator = GetComponentInChildren<Animator>();
+    }
+
     public override void Setup(string name)
     {
         // 기반 클래스의 Setup 메소드 호출 (ID, 이름, 색상 설정)
@@ -104,7 +110,6 @@ public class Boss_Dragon : BaseGameEntity
         ap = 0;
 
         minDistance = 15;
-        animator = GetComponent<Animator>();
         currentPhase = Phase.Normal;
     }
 
