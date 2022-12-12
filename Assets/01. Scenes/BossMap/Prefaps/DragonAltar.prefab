@@ -1,5 +1,52 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &392656334
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 392656335}
+  - component: {fileID: 392656336}
+  m_Layer: 0
+  m_Name: GameContorller
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &392656335
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 392656334}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 7909793329358354652}
+  m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &392656336
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 392656334}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c67c4de5c06cb4159bfde04bae7efa10, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  arrayBoss_Dragon:
+  - Dragon1
+  Boss_DragonPrefab: {fileID: 194904, guid: 445a5c29e7f715947b713a753f242af0, type: 3}
 --- !u!1 &5294033383979255247
 GameObject:
   m_ObjectHideFlags: 0
@@ -107,6 +154,8 @@ GameObject:
   - component: {fileID: 7899306203210111982}
   - component: {fileID: 7867398443783168488}
   - component: {fileID: 7867550358640917388}
+  - component: {fileID: 629104186}
+  - component: {fileID: 629104185}
   m_Layer: 0
   m_Name: DragonAltar
   m_TagString: Untagged
@@ -128,6 +177,7 @@ Transform:
   m_Children:
   - {fileID: 943753934052672236}
   - {fileID: 507625422968116223}
+  - {fileID: 392656335}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -209,6 +259,46 @@ MeshCollider:
   m_Convex: 1
   m_CookingOptions: 30
   m_Mesh: {fileID: 43780472709892042, guid: 6441e44193023484f90b8884fe446b46, type: 2}
+--- !u!135 &629104186
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7912165777850147678}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 2
+  m_Center: {x: 0, y: 1, z: 0}
+--- !u!114 &629104185
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7912165777850147678}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e5b8696c1ecf14fb5a2af8662d8c0a17, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  UI_PopUp: {fileID: 0}
+  dialog: {fileID: 0}
+  dialogTxt: "\uB4DC\uB798\uACE4\uC744 \uC18C\uD658\uD558\uC2DC\uACA0\uC2B5\uB2C8\uAE4C?"
+  enterBtn: {fileID: 0}
+  cancelBtn: {fileID: 0}
+  enterTxt: {fileID: 0}
+  cancelTxt: {fileID: 0}
+  interactionColliders:
+  - {fileID: 0}
+  - {fileID: 0}
+  pointLights:
+  - {fileID: 0}
+  - {fileID: 0}
+  vcam1: {fileID: 0}
+  GC: {fileID: 392656336}
 --- !u!1001 &505791219283618113
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -250,19 +340,19 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4394536802564798, guid: 08088b7d67dc3dd4a80c09d22b7bb2c0, type: 3}
       propertyPath: m_LocalRotation.w
-      value: 1
+      value: 0.7071068
       objectReference: {fileID: 0}
     - target: {fileID: 4394536802564798, guid: 08088b7d67dc3dd4a80c09d22b7bb2c0, type: 3}
       propertyPath: m_LocalRotation.x
-      value: -0
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4394536802564798, guid: 08088b7d67dc3dd4a80c09d22b7bb2c0, type: 3}
       propertyPath: m_LocalRotation.y
-      value: -0
+      value: 0.7071068
       objectReference: {fileID: 0}
     - target: {fileID: 4394536802564798, guid: 08088b7d67dc3dd4a80c09d22b7bb2c0, type: 3}
       propertyPath: m_LocalRotation.z
-      value: -0
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4394536802564798, guid: 08088b7d67dc3dd4a80c09d22b7bb2c0, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -270,7 +360,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4394536802564798, guid: 08088b7d67dc3dd4a80c09d22b7bb2c0, type: 3}
       propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
+      value: 90
       objectReference: {fileID: 0}
     - target: {fileID: 4394536802564798, guid: 08088b7d67dc3dd4a80c09d22b7bb2c0, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z

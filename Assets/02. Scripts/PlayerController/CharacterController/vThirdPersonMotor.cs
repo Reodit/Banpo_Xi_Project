@@ -92,7 +92,7 @@ namespace Invector.vCharacterController
         }
         internal bool isGrounded { get; set; }
         internal bool isSprinting { get; set; }
-        public bool stopMove { get; protected set; }
+        public bool stopMove { get; set; }
 
         internal float inputMagnitude;                      // 애니메이터 컨트롤러에서 애니메이션을 업데이트하도록 inputMagnitude를 설정합니다.
         internal float verticalSpeed;                       // verticalInput을 기반으로 verticalSpeed를 설정합니다.

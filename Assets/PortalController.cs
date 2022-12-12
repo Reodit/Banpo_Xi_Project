@@ -5,9 +5,11 @@ using TMPro;
 using Cinemachine;
 using Invector.vCharacterController;
 using UnityEngine.UI;
+using UnityEngine.InputSystem;
 
 public class PortalController : MonoBehaviour
 {
+    [Header("UI")]
     [SerializeField]
     GameObject UI_PopUp;
     [SerializeField]
@@ -15,69 +17,90 @@ public class PortalController : MonoBehaviour
     [SerializeField]
     string dialogTxt;
     [SerializeField]
+    Button enterBtn, cancleBtn;
+    [SerializeField]
+    TMP_Text enterTxt, cancelTxt;
+
+    [Header("GamePlay")]
+    [SerializeField]
     Transform linkPortalTrans;
     [SerializeField]
     CinemachineVirtualCamera vcam1;
     [SerializeField]
-    Button enterBtn, cancleBtn;
-    [SerializeField]
     Light pointLight;
-    vThirdPersonInput playerScript;
+    vThirdPersonController playerScript;
+    vThirdPersonInput playerInput;
 
     [SerializeField]
     List<GameObject> playerList = new List<GameObject>();
 
+    IEnumerator coroutine;
+
 
     void Start()
     {
-        enterBtn.onClick.AddListener(Teleport);
-        cancleBtn.onClick.AddListener(CancleTeleport);
+        coroutine = LightIntensityUp();
     }
 
-    private void OnCollisionEnter(Collision collision)
+    private void OnTriggerEnter(Collider other)
     {
-        dialog.text = dialogTxt;
-        if(collision.gameObject.tag == "Player")
+        if(other.gameObject.tag == "Player")
         {
-            playerList.Add(collision.gameObject);
-            playerScript = collision.gameObject.GetComponent<vThirdPersonInput>();
+            enterBtn.onClick.AddListener(Teleport);
+            cancleBtn.onClick.AddListener(CancleTeleport);
+            dialog.text = dialogTxt;
+            enterTxt.text = "이동";
+            cancelTxt.text = "취소";
+            playerList.Add(other.gameObject);
+            playerScript = other.gameObject.GetComponent<vThirdPersonController>();
+            playerInput = other.gameObject.GetComponent<vThirdPersonInput>();
             UI_PopUp.SetActive(true);
             Cursor.lockState = CursorLockMode.None;
-            playerScript.enabled = false;
+            playerScript.stopMove = true;
+            playerInput.enabled = false;
             vcam1.enabled = false;
-            StartCoroutine(LightIntensityUp());
+            StartCoroutine(coroutine);
             Debug.Log("Enter");
         }
+        
     }
 
-    private void OnCollisionExit(Collision collision)
+    private void OnTriggerExit(Collider other)
     {
-        if (collision.gameObject.tag == "Player")
+        if (other.gameObject.tag == "Player")
         {
-            playerList.Remove(collision.gameObject);
-            playerScript = collision.gameObject.GetComponent<vThirdPersonInput>();
+            playerList.Remove(other.gameObject);
+            playerScript = other.gameObject.GetComponent<vThirdPersonController>();
+            playerInput = other.gameObject.GetComponent<vThirdPersonInput>();
             UI_PopUp.SetActive(false);
             Cursor.lockState = CursorLockMode.Locked;
-            playerScript.enabled = true;
+            playerScript.stopMove = false;
+            playerInput.enabled = true;
             vcam1.enabled = true;
-            StopCoroutine(LightIntensityUp());
-            pointLight.intensity = 2;
+            StopCoroutine(coroutine);
+            pointLight.intensity = 2f;
+            //StartCoroutine(LightIntensityDown());
             Debug.Log("Exit");
-        }
+        }        
     }
 
     public void CancleTeleport()
     {
         UI_PopUp.SetActive(false);
         Cursor.lockState = CursorLockMode.Locked;
-        playerScript.enabled = true;
+        playerScript.stopMove = false;
+        playerInput.enabled = true;
         vcam1.enabled = true;
-        StopCoroutine(LightIntensityUp());
-        pointLight.intensity = 2;
+        StopCoroutine(coroutine);
+        pointLight.intensity = 2f;
+        //StartCoroutine(LightIntensityDown());
     }
 
     public void Teleport()
     {
+        StopCoroutine(coroutine);
+        pointLight.intensity = 2f;
+        //StartCoroutine(LightIntensityDown());
         foreach (var player in playerList)
         {
             player.transform.position = linkPortalTrans.position;
@@ -90,8 +113,17 @@ public class PortalController : MonoBehaviour
     {
         while (pointLight.intensity < 50)
         {
-            pointLight.intensity += 1;
-            yield return new WaitForSeconds(1f);
+            pointLight.intensity += 0.5f;
+            yield return new WaitForSeconds(0.1f);
+        }
+    }
+
+    IEnumerator LightIntensityDown()
+    {
+        while(pointLight.intensity > 2)
+        {
+            pointLight.intensity -= 0.1f;
+            yield return new WaitForSeconds(0.1f);
         }
     }
 
