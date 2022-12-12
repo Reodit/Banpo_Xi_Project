@@ -96,7 +96,7 @@ public class Boss_Dragon : BaseGameEntity
 
         for (int i = 0; i < players.Length; ++i)
         {
-            players[i] = Instantiate(players[i], new Vector3(0, 0, 20), Quaternion.identity);
+            players[i] = Instantiate(players[i], this.transform.position + new Vector3(0, 0, 10), Quaternion.identity);
             playersDistance[i] = 0f;
         }
 

@@ -20,9 +20,10 @@ public class GameController : MonoBehaviour
         for (int i = 0; i < arrayBoss_Dragon.Length; ++i)
         {
             // 에이전트 생성, 초기화 메소드 호출.
-            GameObject clone = Instantiate(Boss_DragonPrefab);
+            GameObject clone = Instantiate(Boss_DragonPrefab, this.transform.position, Quaternion.identity);
             Boss_Dragon entity = clone.GetComponent<Boss_Dragon>();
             entity.Setup(arrayBoss_Dragon[i]);
+            
 
             // 에이전트들의 재생 제어를 위해 리스트에 저장
             entitys.Add(entity);
