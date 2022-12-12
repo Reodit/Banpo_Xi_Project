@@ -1,6 +1,4 @@
 using System;
-using System.Collections;
-using Cinemachine;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -17,6 +15,7 @@ public enum Boss_Dragon_States
     Screaming,
     Chase
 }
+
 
 [RequireComponent (typeof(NavMeshAgent))]
 public class Boss_Dragon : BaseGameEntity
@@ -63,6 +62,7 @@ public class Boss_Dragon : BaseGameEntity
     {
         animator = GetComponentInChildren<Animator>();
         mNavMeshAgent = GetComponent<NavMeshAgent>();
+
     }
 
     public override void Setup(string name)
