@@ -158,5 +158,24 @@ namespace Invector.vCharacterController
 
             animator.SetTrigger("Attack");
         }
+
+
+
+
+
+        #region Lock and Unlock Move
+        public virtual void LockMove()
+        {
+            _rigidbody.velocity= Vector3.zero;
+            inputMagnitude = 0;
+            stopMove = true;
+        }
+        public virtual void UnlockMove()
+        {
+            stopMove = false;
+        }
+
+        #endregion
+
     }
 }

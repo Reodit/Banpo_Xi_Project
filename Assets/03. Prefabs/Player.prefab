@@ -428,7 +428,8 @@ GameObject:
   - component: {fileID: 8121769020295867994}
   - component: {fileID: 1026352123}
   - component: {fileID: 1026352124}
-  m_Layer: 10
+  - component: {fileID: 1026352130}
+  m_Layer: 0
   m_Name: Player
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -547,7 +548,6 @@ MonoBehaviour:
   rotateCameraXInput: Mouse X
   rotateCameraYInput: Mouse Y
   cc: {fileID: 0}
-  tpCamera: {fileID: 0}
   cameraMain: {fileID: 0}
 --- !u!54 &8121769020295867997
 Rigidbody:
@@ -605,6 +605,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d30f5fa5209eab84ea4f4edc907e4e52, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &1026352130
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8121769020295867995}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6b3678f32de5bd9488bd9c966d981f6d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  healthLevel: 10
+  maxHealth: 0
+  currentHealth: 0
+  healthBar: {fileID: 0}
 --- !u!1 &8121769020314859111
 GameObject:
   m_ObjectHideFlags: 0
