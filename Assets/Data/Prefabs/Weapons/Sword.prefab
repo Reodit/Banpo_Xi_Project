@@ -142,6 +142,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6fbcb1d41b57ef14f93451616c44a419, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  hitBoxDisappearTime: 1.5
+  numberHitBox: {fileID: 8152740435087594098, guid: 28e8a4bd3e5654c9a8f95a0f3a04d786, type: 3}
   currentWeaponDamage: 25
 --- !u!1 &5923179456641733115
 GameObject:

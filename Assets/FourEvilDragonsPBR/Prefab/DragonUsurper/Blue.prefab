@@ -4046,12 +4046,10 @@ MonoBehaviour:
   ap: 0
   currentPhase: 0
   players:
-  - {fileID: 4564544676406223089, guid: 068724c5908e84cf7aab2fbbfe5bec91, type: 3}
-  - {fileID: 4564544676406223089, guid: 068724c5908e84cf7aab2fbbfe5bec91, type: 3}
+  - {fileID: 4297191204725671628, guid: 9a91518cd31fc44ffaf21e376e7a399b, type: 3}
+  - {fileID: 4297191204725671628, guid: 9a91518cd31fc44ffaf21e376e7a399b, type: 3}
   mEnemyAggroformat: 0
-  stopDistance: 5
-  idleTime: 3
-  minAttackRange: 3
+  idleTime: 2
   animator: {fileID: 0}
 --- !u!95 &521491593519360556
 Animator:

@@ -1,6 +1,9 @@
 using UnityEngine;
 using System;
 using Cinemachine;
+using ExitGames.Client.Photon.StructWrapping;
+using BitStream = Fusion.Protocol.BitStream;
+using Random = UnityEngine.Random;
 
 namespace Boss_DragonStates
 {
@@ -9,70 +12,51 @@ namespace Boss_DragonStates
         public override void Enter(Boss_Dragon entity)
         {
             entity.PrintText("Idle Enter");
-            entity.Animator.Play("Idle");
+            entity.Animator.CrossFade("Idle", 0.1f);
             entity.SetCurrentTarget();
         }
 
         public override void Execute(Boss_Dragon entity)
         {
             if (entity.Animator.GetCurrentAnimatorStateInfo(0).normalizedTime >= entity.idleTime &&
-                entity.mEnemyAggro.Target)
-            {
-                if (entity.HP < 80 &&
-                    entity.HP >= 70)
-                {
-                    entity.ChangeState(Boss_Dragon_States.Flying);
-                }
+                entity.mEnemyAggro.Target &&
+                entity.IsCurrentAnimaitionStart)
+            {   
+                int ranValue = Random.Range(0, 100);
 
-                else if (entity.HP >= 80)
+                if (entity.CurrentPhase != Phase.FlyAttackPhase)
                 {
-                    entity.ChangeState(Boss_Dragon_States.NormalAttack);
-                }
-                
-                else if (entity.HP < 70 &&
-                         entity.HP >= 60)
-                {
-                    entity.ChangeState(Boss_Dragon_States.Defend);
-                }
-                
-                else if (entity.HP < 60 &&
-                         entity.HP >= 50)
-                {
-                    entity.ChangeState(Boss_Dragon_States.ClawAttack);
-                }
-                
-                else if (entity.HP < 50 &&
-                         entity.HP >= 40)
-                {
+                    entity.SetCurrentTarget();
+            
+                    if (entity.mEnemyAggro.TargetDistance > 2f)
+                    {
+                        entity.IsPlayerExistNearby = false;
+                    }
+                    
                     entity.ChangeState(Boss_Dragon_States.Chase);
                 }
-                
-                else if (entity.HP < 40 &&
-                         entity.HP >= 30)
+
+                else
                 {
-                    entity.ChangeState(Boss_Dragon_States.Die);
-                }
-                
-                else if (entity.HP < 30 &&
-                         entity.HP >= 20)
-                {
-                    entity.ChangeState(Boss_Dragon_States.Screaming);
-                }
-                
-                else if (entity.HP < 20 &&
-                         entity.HP >= 10)
-                {
-                    entity.ChangeState(Boss_Dragon_States.BreathOnAir);
-                }
-                
-                else if (entity.HP < 10 &&
-                         entity.HP >= 0)
-                {
-                    entity.ChangeState(Boss_Dragon_States.BreathOnLand);
+                    entity.SetCurrentTarget();
+            
+                    if (entity.mEnemyAggro.TargetDistance > 2f)
+                    {
+                        entity.IsPlayerExistNearby = false;
+                    }
+                    
+                    if (ranValue < 70)
+                    {
+                        entity.ChangeState(Boss_Dragon_States.Chase);
+                        
+                    }
+
+                    else
+                    {
+                        entity.ChangeState(Boss_Dragon_States.Flying);
+                    }
                 }
             }
-
-            entity.PrintText("Idle Execute");
         }
 
         public override void Exit(Boss_Dragon entity)
@@ -85,18 +69,17 @@ namespace Boss_DragonStates
     {
         public override void Enter(Boss_Dragon entity)
         {
-            entity.Animator.Play("AttackMouth1");
+            entity.Animator.CrossFade("AttackMouth1", 0.1f);
             entity.PrintText("NormalAttack Enter");
         }
 
         public override void Execute(Boss_Dragon entity)
         {
-            if (entity.Animator.GetCurrentAnimatorStateInfo(0).normalizedTime >= 1f )
+            if (entity.IsCurrentAnimaitionStart &&
+                (int)entity.Animator.GetCurrentAnimatorStateInfo(0).normalizedTime > 0)
             {
                 entity.ChangeState(Boss_Dragon_States.Idle);
             }
-
-            entity.PrintText("NormalAttack Execute");
         }
 
         public override void Exit(Boss_Dragon entity)
@@ -109,12 +92,14 @@ namespace Boss_DragonStates
     {
         public override void Enter(Boss_Dragon entity)
         {
-            entity.Animator.Play("BreathOnAir1");
+            entity.Animator.CrossFade("BreathOnAir1", 0.1f);
+            entity.PrintText("BreathOnAir Enter");
         }
 
         public override void Execute(Boss_Dragon entity)
         {
-            if (entity.Animator.GetCurrentAnimatorStateInfo(0).normalizedTime >= 1f )
+            if (entity.IsCurrentAnimaitionStart &&
+                (int)entity.Animator.GetCurrentAnimatorStateInfo(0).normalizedTime > 0)
             {
                 entity.ChangeState(Boss_Dragon_States.Idle);
             }
@@ -122,6 +107,7 @@ namespace Boss_DragonStates
 
         public override void Exit(Boss_Dragon entity)
         {
+            entity.PrintText("BreathOnAir Exit");
         }
     }
 
@@ -129,19 +115,17 @@ namespace Boss_DragonStates
     {
         public override void Enter(Boss_Dragon entity)
         {
-            
-            entity.Animator.Play("Flying1");
+            entity.Animator.CrossFade("Flying1", 0.1f);
             entity.PrintText("Flying Enter");
         }
 
         public override void Execute(Boss_Dragon entity)
         {
-            if (entity.Animator.GetCurrentAnimatorStateInfo(0).normalizedTime >= 1)
+            if (entity.IsCurrentAnimaitionStart &&
+                (int)entity.Animator.GetCurrentAnimatorStateInfo(0).normalizedTime > 0)
             {
-                entity.ChangeState(Boss_Dragon_States.Idle);
+                entity.ChangeState(Boss_Dragon_States.ChaseOnAir);
             }
-
-            entity.PrintText("Flying Execute");
         }
 
         public override void Exit(Boss_Dragon entity)
@@ -154,12 +138,14 @@ namespace Boss_DragonStates
     {
         public override void Enter(Boss_Dragon entity)
         {
-            entity.Animator.Play("ClawAttack1");
+            entity.Animator.CrossFade("ClawAttack1", 0.1f);
+            entity.PrintText("ClawAttack Enter");
         }
 
         public override void Execute(Boss_Dragon entity)
         {
-            if (entity.Animator.GetCurrentAnimatorStateInfo(0).normalizedTime >= 1)
+            if (entity.IsCurrentAnimaitionStart &&
+                (int)entity.Animator.GetCurrentAnimatorStateInfo(0).normalizedTime > 0)
             {
                 entity.ChangeState(Boss_Dragon_States.Idle);
             }
@@ -167,6 +153,7 @@ namespace Boss_DragonStates
 
         public override void Exit(Boss_Dragon entity)
         {
+            entity.PrintText("ClawAttack Exit");
         }
     }
     
@@ -174,12 +161,14 @@ namespace Boss_DragonStates
     {
         public override void Enter(Boss_Dragon entity)
         {
-            entity.Animator.Play("Defend1");
+            entity.Animator.CrossFade("Defend1", 0.1f);
+            entity.PrintText("Defend Enter");
         }
 
         public override void Execute(Boss_Dragon entity)
         {
-            if (entity.Animator.GetCurrentAnimatorStateInfo(0).normalizedTime >= 1)
+            if (entity.IsCurrentAnimaitionStart &&
+                (int)entity.Animator.GetCurrentAnimatorStateInfo(0).normalizedTime > 0)
             {
                 entity.ChangeState(Boss_Dragon_States.Idle);
             }
@@ -187,6 +176,7 @@ namespace Boss_DragonStates
 
         public override void Exit(Boss_Dragon entity)
         {
+            entity.PrintText("Defend Exit");
         }
     }
     
@@ -194,12 +184,14 @@ namespace Boss_DragonStates
     {
         public override void Enter(Boss_Dragon entity)
         {
-            entity.Animator.Play("Screaming1");
+            entity.Animator.CrossFade("Screaming1", 0.1f);
+            entity.PrintText("Screaming Enter");
         }
 
         public override void Execute(Boss_Dragon entity)
         {
-            if (entity.Animator.GetCurrentAnimatorStateInfo(0).normalizedTime >= 1)
+            if (entity.IsCurrentAnimaitionStart &&
+                (int)entity.Animator.GetCurrentAnimatorStateInfo(0).normalizedTime > 0)
             {
                 entity.ChangeState(Boss_Dragon_States.Idle);
             }        
@@ -207,6 +199,7 @@ namespace Boss_DragonStates
 
         public override void Exit(Boss_Dragon entity)
         {
+            entity.PrintText("Screaming Exit");
         }
     }
     
@@ -214,12 +207,14 @@ namespace Boss_DragonStates
     {
         public override void Enter(Boss_Dragon entity)
         {
-            entity.Animator.Play("BreathOnLand1");
+            entity.Animator.CrossFade("BreathOnLand1", 0.1f);
+            entity.PrintText("BreathOnLand Enter");
         }
 
         public override void Execute(Boss_Dragon entity)
         {
-            if (entity.Animator.GetCurrentAnimatorStateInfo(0).normalizedTime >= 1)
+            if (entity.IsCurrentAnimaitionStart &&
+                (int)entity.Animator.GetCurrentAnimatorStateInfo(0).normalizedTime > 0)
             {
                 entity.ChangeState(Boss_Dragon_States.Idle);
             }
@@ -227,6 +222,7 @@ namespace Boss_DragonStates
 
         public override void Exit(Boss_Dragon entity)
         {
+            entity.PrintText("BreathOnLand Exit");
         }
     }
     
@@ -234,15 +230,11 @@ namespace Boss_DragonStates
     {
         public override void Enter(Boss_Dragon entity)
         {
-            entity.Animator.Play("Die1");
+            entity.Animator.CrossFade("Die1", 0.1f);
         }
 
         public override void Execute(Boss_Dragon entity)
         {
-            if (entity.Animator.GetCurrentAnimatorStateInfo(0).normalizedTime >= 1)
-            {
-                entity.ChangeState(Boss_Dragon_States.Idle);
-            }        
         }
 
         public override void Exit(Boss_Dragon entity)
@@ -255,20 +247,107 @@ namespace Boss_DragonStates
         public override void Enter(Boss_Dragon entity)
         {
             entity.PrintText("StartChase");
-            entity.Animator.Play("Chase1");
-            entity.DestinationCoroutineStart();
         }
 
         public override void Execute(Boss_Dragon entity)
         {
-            if (entity.mNavMeshAgent.remainingDistance <= 0.1f)
+            if (!entity.IsPlayerExistNearby)
             {
-                entity.ChangeState(Boss_Dragon_States.NormalAttack);
+                entity.Animator.Play("Chase1");
+                entity.DestinationCoroutineStart();
+            }
+        
+            if (entity.IsCurrentAnimaitionStart &&
+                (int)entity.Animator.GetCurrentAnimatorStateInfo(0).normalizedTime > 0 &&
+                entity.mNavMeshAgent.remainingDistance < 0.1f ||
+                entity.IsPlayerExistNearby)
+            {
+                if (entity.CurrentPhase == Phase.Normal)
+                {
+                    int ranValue = Random.Range(0, 100);
+                    if (ranValue < 50)
+                    {
+                        entity.ChangeState(Boss_Dragon_States.NormalAttack);
+                    }
+                    
+                    else
+                    {
+                        entity.ChangeState(Boss_Dragon_States.ClawAttack);
+                    }
+                }
+                
+                else if (entity.CurrentPhase == Phase.FireAttackPhase)
+                {
+                    int ranValue = Random.Range(0, 100);
+                    if (ranValue < 25)
+                    {
+                        entity.ChangeState(Boss_Dragon_States.NormalAttack);
+                    }
+                    
+                    else if (ranValue < 50 &&
+                             ranValue >= 25)
+                    {
+                        entity.ChangeState(Boss_Dragon_States.ClawAttack);
+                    }
+                    
+                    else if (ranValue < 100 &&
+                             ranValue >= 50)
+                    {
+                        entity.ChangeState(Boss_Dragon_States.BreathOnLand);
+                    }
+                }
+                
+                else if (entity.CurrentPhase == Phase.FlyAttackPhase)
+                {
+                    int ranValue = Random.Range(0, 100);
+                    if (ranValue < 33)
+                    {
+                        entity.ChangeState(Boss_Dragon_States.ClawAttack);
+                    }
+                    
+                    else if (ranValue < 100 &&
+                             ranValue >= 33)
+                    {
+                        entity.ChangeState(Boss_Dragon_States.BreathOnLand);
+                    }
+                }
             }
         }
 
         public override void Exit(Boss_Dragon entity)
         {
+            entity.PrintText("EndChase");
+        }
+    }
+    
+    public class ChaseOnAir : State
+    {
+        public override void Enter(Boss_Dragon entity)
+        {
+            entity.PrintText("StartChaseOnAir");
+
+            if (!entity.IsPlayerExistNearby)
+            {
+                entity.Animator.CrossFade("ChaseOnAir1", 0.1f); 
+                entity.DestinationCoroutineStart();
+            }
+        }
+
+        public override void Execute(Boss_Dragon entity)
+        {
+            if (entity.IsCurrentAnimaitionStart &&
+                (int)entity.Animator.GetCurrentAnimatorStateInfo(0).normalizedTime > 0 &&
+                entity.mNavMeshAgent.remainingDistance < 0.1f ||
+                entity.IsPlayerExistNearby)
+            {
+                entity.ChangeState(Boss_Dragon_States.BreathOnAir);
+            }
+        }
+
+        public override void Exit(Boss_Dragon entity)
+        {
+            entity.IsPlayerExistNearby = false;
+            entity.PrintText("ChaseOnAir Exit");
         }
     }
 }

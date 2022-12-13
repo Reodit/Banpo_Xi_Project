@@ -15,7 +15,8 @@ public enum Boss_Dragon_States
     BreathOnLand,
     Die,
     Screaming,
-    Chase
+    Chase,
+    ChaseOnAir
 }
 
 
@@ -27,14 +28,13 @@ public class Boss_Dragon : BaseGameEntity
     [SerializeField] private Phase currentPhase;                 // 현재 페이즈
     [SerializeField] private GameObject[] players;
     [SerializeField] private EnemyAggroformat mEnemyAggroformat;
-    private const float calculateDestinationterm = 0.2f;
+    private const float CALCULATE_DESTINATIONTERM = 0.2f;
     public EnemyAggro mEnemyAggro { get; private set; }
     public NavMeshAgent mNavMeshAgent { get; private set; }
-    public bool isArrivedtoTarget { get; private set; }
-    [SerializeField] private float stopDistance = 5f;
+    public bool IsCurrentAnimaitionStart { get; set; }
+    public bool IsInvincible { get; private set; }
+    public bool IsPlayerExistNearby { get; set; }
     public float idleTime = 3f;
-    public float minAttackRange = 3f;
-    
     // Dragon이 가지고 있는 모든 상태, 현재 상태.
     private State[] states;
     private State currentState;
@@ -80,7 +80,7 @@ public class Boss_Dragon : BaseGameEntity
         gameObject.name = $"{ID:D2}_Student_{name}";
 
         // Student가 가질 수 있는 상태 개수만큼 메모리 할당, 각 상태에 클래스 메모리 할당
-        states = new State[10];
+        states = new State[11];
         states[(int)Boss_Dragon_States.Idle] = new Boss_DragonStates.Idle();
         states[(int)Boss_Dragon_States.NormalAttack] = new Boss_DragonStates.NormalAttack();
         states[(int)Boss_Dragon_States.Flying] = new Boss_DragonStates.Flying();
@@ -91,54 +91,87 @@ public class Boss_Dragon : BaseGameEntity
         states[(int)Boss_Dragon_States.Screaming] = new Boss_DragonStates.Screaming();
         states[(int)Boss_Dragon_States.BreathOnAir] = new Boss_DragonStates.BreathOnAir();
         states[(int)Boss_Dragon_States.BreathOnLand] = new Boss_DragonStates.BreathOnLand();
+        states[(int)Boss_Dragon_States.ChaseOnAir] = new Boss_DragonStates.ChaseOnAir();
         
         for (int i = 0; i < players.Length; ++i)
         {
             players[i] = Instantiate(players[i], this.transform.position + new Vector3(0, 0, 10), Quaternion.identity);
+            players[i].name = "Player " + i;
         }
         
         mEnemyAggro = new EnemyAggro(null, players);
         mEnemyAggro.InitCurrentPlayers();
 
-        // 기본 상태 설정
-        ChangeState(Boss_Dragon_States.Idle);
-
         hp = 100;
         ap = 0;
         currentPhase = Phase.Normal;
+        IsInvincible = false;
+        
+        // 기본 상태 설정
+        ChangeState(Boss_Dragon_States.Idle);
         Debug.Log("SetUpComplete");
     }
 
     private IEnumerator UpdateDestination()
     {
-        isArrivedtoTarget = false;
         mNavMeshAgent.SetDestination(mEnemyAggro.Target.transform.position);
 
         while (mNavMeshAgent.remainingDistance > 0.1f)
         {
-            Debug.Log("in Coroutine");
-            Debug.Log(mNavMeshAgent.remainingDistance);
             mNavMeshAgent.SetDestination(mEnemyAggro.Target.transform.position);
-            yield return new WaitForSeconds(calculateDestinationterm);
+            yield return new WaitForSeconds(CALCULATE_DESTINATIONTERM);
         }
-
-        isArrivedtoTarget = true;
-        Debug.Log("out Coroutine");
+        IsPlayerExistNearby = true;
     }
     
     public void DestinationCoroutineStart()
     {
         StartCoroutine(UpdateDestination());
     }
+
+    public void CurrentAnimtionPlayCheck()
+    {
+        if (Animator.GetCurrentAnimatorStateInfo(0).normalizedTime < 0.5f &&
+            !IsCurrentAnimaitionStart)
+        {
+            IsCurrentAnimaitionStart = true;
+        }
+    }
     
     public override void Updated()
     {
         if (currentState != null)
         {
+            Debug.Log(currentPhase);
+            CurrentAnimtionPlayCheck();
             currentState.Execute(this);
+            
+            if (currentPhase == Phase.Normal && hp <= 70)
+            {
+                IsInvincible = true;
+                currentPhase = Phase.FireAttackPhase;
+                ForcedChangeState(Boss_Dragon_States.Screaming);
+            }
+            else if (currentPhase == Phase.FireAttackPhase && hp <= 40)
+            {
+                IsInvincible = true;
+                currentPhase = Phase.FlyAttackPhase;
+                ForcedChangeState(Boss_Dragon_States.Screaming);
+            }
+            else if (currentPhase == Phase.FlyAttackPhase && hp <= 0)
+            {
+                IsInvincible = true;
+                currentPhase = Phase.Die;
+                ForcedChangeState(Boss_Dragon_States.Die);
+            }
         }
     }
 
+    public void ForcedChangeState(Boss_Dragon_States newforceState)
+    {
+        ChangeState(newforceState);
+    }
+    
     public void SetCurrentTarget()
     {
         mEnemyAggro.SetTarget(mEnemyAggroformat, this.transform.position);
@@ -155,6 +188,7 @@ public class Boss_Dragon : BaseGameEntity
         // 현재 재생중인 상태가 있으면 Exit() 메소드 호출
         if (currentState != null)
         {
+            IsCurrentAnimaitionStart = false;
             currentState.Exit(this);
         }
 

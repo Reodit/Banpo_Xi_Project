@@ -5,6 +5,7 @@ using UnityEngine;
 public class EnemyAggro
 {
     public GameObject Target;
+    public float TargetDistance;
     public GameObject[] CurrentPlayers;
     public int CurrentPlayersCount;
     
@@ -41,8 +42,9 @@ public class EnemyAggro
 
     private void TargetInit()
     {
-        if (!Target)
+        if (Target)
         {
+            Debug.Log("이전 타겟 :  " + Target.transform.name);
             Target = null;
         }
 
@@ -63,6 +65,7 @@ public class EnemyAggro
         }
 
         Target = playerDistanceInfo.FirstOrDefault(x => x.Value == playerDistanceInfo.Values.Min()).Key;
+        TargetDistance = playerDistanceInfo.FirstOrDefault(x => x.Value == playerDistanceInfo.Values.Min()).Value;
         Debug.Log(" 타겟 :  " + Target);
         Debug.Log(" 적 좌표 : " + enemyPosition + "   " + " 플레이어와의 거리 : " + Target.transform.position);
     }
