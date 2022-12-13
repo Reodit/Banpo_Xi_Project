@@ -55,7 +55,7 @@ public class AltarController : MonoBehaviour
             Cursor.lockState = CursorLockMode.None;
             playerScript = other.gameObject.GetComponent<vThirdPersonController>();
             playerInput = other.gameObject.GetComponent<vThirdPersonInput>();
-            playerScript.stopMove = true;
+            UIManager.Instance.isUIOpen = true;
             playerInput.enabled = false;
             vcam1.enabled = false;
             StartCoroutine(coroutine);
@@ -77,7 +77,7 @@ public class AltarController : MonoBehaviour
             light.color = Color.red;
         }
         Cursor.lockState = CursorLockMode.Locked;
-        playerScript.stopMove = false;
+        UIManager.Instance.isUIOpen = false;
         playerInput.enabled = true;
         vcam1.enabled = true;
         UI_PopUp.SetActive(false);
@@ -89,7 +89,7 @@ public class AltarController : MonoBehaviour
     {
         UI_PopUp.SetActive(false);
         Cursor.lockState = CursorLockMode.Locked;
-        playerScript.stopMove = false;
+        UIManager.Instance.isUIOpen = false;
         playerInput.enabled = true;
         vcam1.enabled = true;
         StopCoroutine(coroutine);

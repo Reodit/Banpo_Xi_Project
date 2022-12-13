@@ -56,8 +56,7 @@ public class PortalController : MonoBehaviour
             playerInput = other.gameObject.GetComponent<vThirdPersonInput>();
             UI_PopUp.SetActive(true);
             Cursor.lockState = CursorLockMode.None;
-            playerScript.stopMove = true;
-            playerInput.enabled = false;
+            UIManager.Instance.isUIOpen = true;
             vcam1.enabled = false;
             StartCoroutine(coroutine);
             Debug.Log("Enter");
@@ -74,7 +73,7 @@ public class PortalController : MonoBehaviour
             playerInput = other.gameObject.GetComponent<vThirdPersonInput>();
             UI_PopUp.SetActive(false);
             Cursor.lockState = CursorLockMode.Locked;
-            playerScript.stopMove = false;
+            UIManager.Instance.isUIOpen = false;
             playerInput.enabled = true;
             vcam1.enabled = true;
             StopCoroutine(coroutine);
@@ -88,7 +87,7 @@ public class PortalController : MonoBehaviour
     {
         UI_PopUp.SetActive(false);
         Cursor.lockState = CursorLockMode.Locked;
-        playerScript.stopMove = false;
+        UIManager.Instance.isUIOpen = false;
         playerInput.enabled = true;
         vcam1.enabled = true;
         StopCoroutine(coroutine);
