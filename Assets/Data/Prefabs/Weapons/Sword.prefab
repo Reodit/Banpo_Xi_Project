@@ -43,6 +43,8 @@ GameObject:
   - component: {fileID: 3754528706894702905}
   - component: {fileID: 3779460418986938123}
   - component: {fileID: 3772203505652211691}
+  - component: {fileID: 8137152885743157807}
+  - component: {fileID: 7321922362949271386}
   m_Layer: 0
   m_Name: Sword
   m_TagString: Untagged
@@ -115,6 +117,32 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!65 &8137152885743157807
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3750988455353847171}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.2, y: 1.2, z: 0.2}
+  m_Center: {x: 0.00000007264316, y: 0.8, z: 0}
+--- !u!114 &7321922362949271386
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3750988455353847171}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6fbcb1d41b57ef14f93451616c44a419, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  currentWeaponDamage: 25
 --- !u!1 &5923179456641733115
 GameObject:
   m_ObjectHideFlags: 0

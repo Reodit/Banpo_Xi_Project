@@ -13,7 +13,7 @@ namespace Invector.vCharacterController
             }
             else if (Cursor.lockState == CursorLockMode.None)
             {
-                if (Input.GetMouseButtonDown(0))
+                if (Input.GetMouseButtonDown(0) && !UIManager.Instance.isUIOpen)
                 {
                     Cursor.lockState = CursorLockMode.Locked;
 

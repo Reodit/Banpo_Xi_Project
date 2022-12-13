@@ -87,7 +87,6 @@ GameObject:
   - component: {fileID: 5071589117205860204}
   - component: {fileID: 5071589117205860202}
   - component: {fileID: 2044510258}
-  - component: {fileID: 2044510257}
   m_Layer: 5
   m_Name: Healthbar
   m_TagString: Untagged
@@ -175,19 +174,6 @@ MonoBehaviour:
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls: []
---- !u!114 &2044510257
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5071589117205860205}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9ba4975719624f747afe8415d96f7c4e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  slider: {fileID: 2044510258}
 --- !u!1 &5071589117277828137
 GameObject:
   m_ObjectHideFlags: 0

@@ -5,19 +5,36 @@ using UnityEngine.UI;
 
 public class HealthBar : MonoBehaviour
 {
-    public Slider slider;
+    public Slider healthBar;
+    public Slider staminaBar;
 
     private void Start()
     {
-        slider = GetComponent<Slider>();
+        healthBar = GetComponentInChildren<Slider>();
+        staminaBar = GetComponentInChildren<Slider>();
     }
+
+    #region Health
     public void SetMaxHealth(int maxHealth)
     {
-        slider.maxValue = maxHealth;
-        slider.value = maxHealth;
+        healthBar.maxValue = maxHealth;
+        healthBar.value = maxHealth;
     }
     public void SetCurrentHealth(int currentHealth)
     {
-        slider.value = currentHealth;
+        healthBar.value = currentHealth;
     }
+    #endregion
+    #region Stamina
+    public void SetMaxStamina(int maxStamina)
+    {
+        staminaBar.maxValue = maxStamina;
+        staminaBar.value = maxStamina;
+    }
+    public void SetCurrentStamina(int currentStamina)
+    {
+        staminaBar.value = currentStamina;
+    }
+    #endregion
+
 }

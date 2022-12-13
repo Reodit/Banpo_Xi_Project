@@ -79,6 +79,8 @@ namespace Invector.vCharacterController
         internal bool isDashing;
         internal bool isAttacking;
         internal bool isSkillQ;
+
+        internal bool isDie;
         internal bool isStrafing
         {
             get
@@ -156,6 +158,7 @@ namespace Invector.vCharacterController
             colliderHeight = GetComponent<CapsuleCollider>().height;
 
             isGrounded = true;
+            isDie = false;
         }
 
         public virtual void UpdateMotor()
@@ -183,7 +186,7 @@ namespace Invector.vCharacterController
             // calculate input smooth
             inputSmooth = Vector3.Lerp(inputSmooth, input, (isStrafing ? strafeSpeed.movementSmooth : freeSpeed.movementSmooth) * Time.deltaTime);
 
-            if (!isGrounded || isJumping) return;
+            if (!isGrounded || isJumping || isDie) return;
 
             _direction.y = 0;
             _direction.x = Mathf.Clamp(_direction.x, -1f, 1f);

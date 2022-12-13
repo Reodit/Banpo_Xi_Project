@@ -43,6 +43,8 @@ namespace Invector.vCharacterController
         {
             InputHandle();                  // update the input methods
             cc.UpdateAnimator();            // updates the Animator Parameters
+            
+            
             cc.CursorManager();
         }
 
@@ -64,6 +66,8 @@ namespace Invector.vCharacterController
 
         protected virtual void InputHandle()
         {
+            if (UIManager.Instance.isUIOpen || cc.isDie) return;
+
             MoveInput();
             CameraInput();
             SprintInput();
@@ -122,19 +126,19 @@ namespace Invector.vCharacterController
         /// <returns></returns>
         protected virtual bool JumpConditions()
         {
-            return cc.isGrounded && cc.GroundAngle() < cc.slopeLimit && !cc.isJumping && !cc.stopMove;
+            return cc.isGrounded && cc.GroundAngle() < cc.slopeLimit && !cc.isJumping && !cc.stopMove && !cc.isDie;
         }
         protected virtual bool DashConditions()
         {
-            return !cc.isDashing;
+            return !cc.isDashing && !cc.isDie;
         }
         protected virtual bool AttackConditions()
         {
-            return !cc.isJumping && !cc.isDashing;
+            return cc.isGrounded && !cc.isJumping && !cc.isDashing && !cc.isDie;
         }
         protected virtual bool SkillQConditions()
         {
-            return !cc.isJumping && !cc.isDashing && cc.isGrounded;
+            return !cc.isJumping && !cc.isDashing && cc.isGrounded && !cc.isDie;
         }
 
         /// <summary>

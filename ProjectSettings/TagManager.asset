@@ -8,6 +8,7 @@ TagManager:
   - Portal
   - ManaSprite
   - HealthSprite
+  - Enemy
   layers:
   - Default
   - TransparentFX
