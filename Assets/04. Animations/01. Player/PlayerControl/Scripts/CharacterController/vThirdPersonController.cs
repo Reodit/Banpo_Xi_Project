@@ -21,7 +21,7 @@ namespace Invector.vCharacterController
             }
         }
 
-        public virtual void ControlAnimatorRootMotion()
+        public virtual void ControlAnimatorRootMotion(NetworkInputData data)
         {
             if (!this.enabled) return;
 
@@ -32,10 +32,10 @@ namespace Invector.vCharacterController
             }
 
             if (useRootMotion)
-                MoveCharacter(moveDirection);
+                MoveCharacter(moveDirection, data);
         }
 
-        public virtual void ControlLocomotionType()
+        public virtual void ControlLocomotionType(NetworkInputData data)
         {
             if (lockMovement) return;
 
@@ -52,7 +52,7 @@ namespace Invector.vCharacterController
             }
 
             if (!useRootMotion)
-                MoveCharacter(moveDirection);
+                MoveCharacter(moveDirection, data);
         }
 
         public virtual void ControlRotationType()

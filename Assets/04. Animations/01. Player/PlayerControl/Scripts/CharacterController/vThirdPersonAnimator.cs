@@ -17,7 +17,7 @@ namespace Invector.vCharacterController
         {
             if (animator == null || !animator.enabled) return;
 
-            animator.SetBool(vAnimatorParameters.IsStrafing, isStrafing); ;
+            animator.SetBool(vAnimatorParameters.IsStrafing, isStrafing);
             animator.SetBool(vAnimatorParameters.IsSprinting, isSprinting);
             animator.SetBool(vAnimatorParameters.IsGrounded, isGrounded);
             animator.SetFloat(vAnimatorParameters.GroundDistance, groundDistance);

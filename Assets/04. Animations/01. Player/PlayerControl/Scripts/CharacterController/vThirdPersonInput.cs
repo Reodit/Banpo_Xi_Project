@@ -40,7 +40,7 @@ namespace Invector.vCharacterController
         protected virtual void FixedUpdate()
         {
             cc.UpdateMotor();               // updates the ThirdPersonMotor methods
-            cc.ControlLocomotionType();     // handle the controller locomotion type and movespeed
+            //cc.ControlLocomotionType();     // handle the controller locomotion type and movespeed
             cc.ControlRotationType();       // handle the controller rotation type
         }
 
@@ -53,7 +53,7 @@ namespace Invector.vCharacterController
 
         public virtual void OnAnimatorMove()
         {
-            cc.ControlAnimatorRootMotion(); // handle root motion animations 
+            //cc.ControlAnimatorRootMotion(); // handle root motion animations 
         }
 
         #region Basic Locomotion Inputs

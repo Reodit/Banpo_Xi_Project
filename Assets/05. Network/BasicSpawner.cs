@@ -144,14 +144,24 @@ public class BasicSpawner : MonoBehaviour, INetworkRunnerCallbacks
         {
             data.velocity = vControl.GetVelocity();
             data.direction = vControl.GetDirection();
+            Debug.Log($"data.velocity: {data.velocity}\ndata.direction: {data.direction}");
+
             if (Input.GetKey(vNInput.strafeInput))
                 data.strafe = Input.GetKey(vNInput.strafeInput);
-            data.strafe = false;
+            //data.strafe = false;
             if (Input.GetKey(vNInput.sprintInput))
                 data.sprint = Input.GetKey(vNInput.sprintInput);
-            data.sprint = false;
-
-
+            //data.sprint = false;
+            if (Input.GetKey(vNInput.jumpInput))
+            {
+                data.jumpInput = Input.GetKey(vNInput.jumpInput);
+            }
+            //data.jumpInput = false;
+            if (Input.GetKey(vNInput.attackInput))
+            {
+                data.attackInput = Input.GetKey(vNInput.attackInput );
+            }
+            //data.attackInput = false;
         }
 
 
@@ -160,19 +170,18 @@ public class BasicSpawner : MonoBehaviour, INetworkRunnerCallbacks
         if (Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.D))
             data.xAxis = Input.GetAxis("Horizontal");
 
-        //if (Input.GetKeyDown(strafeInput))
 
-            //if (Input.GetKey(KeyCode.W))
-            //    data.direction += Vector3.forward;
+        //if (Input.GetKey(KeyCode.W))
+        //    data.direction += Vector3.forward;
 
-            //if (Input.GetKey(KeyCode.S))
-            //    data.direction += Vector3.back;
+        //if (Input.GetKey(KeyCode.S))
+        //    data.direction += Vector3.back;
 
-            //if (Input.GetKey(KeyCode.A))
-            //    data.direction += Vector3.left;
+        //if (Input.GetKey(KeyCode.A))
+        //    data.direction += Vector3.left;
 
-            //if (Input.GetKey(KeyCode.D))
-            //    data.direction += Vector3.right;
+        //if (Input.GetKey(KeyCode.D))
+        //    data.direction += Vector3.right;
 
 
         if (_mouseButton0) { data.buttons |= NetworkInputData.MOUSEBUTTON1; }

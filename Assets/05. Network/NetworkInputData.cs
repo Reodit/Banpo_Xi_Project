@@ -16,5 +16,8 @@ public struct NetworkInputData : INetworkInput
 
     public bool strafe;
     public bool sprint;
+    public bool jumpInput;
+    public bool dashInput;
+    public bool attackInput;
 
 }

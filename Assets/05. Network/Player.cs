@@ -54,7 +54,7 @@ public class Player : NetworkBehaviour
         if (GetInput(out NetworkInputData data))
         {
             data.direction.Normalize();
-            _cc.Velocity = data.velocity * Runner.DeltaTime;
+            //_cc.Velocity = data.velocity * Runner.DeltaTime;
 
             //Debug.Log("Data: "+data.velocity);
             //Debug.Log("_cc: "+_cc.Velocity);

@@ -39,7 +39,11 @@ namespace Invector.vCharacterController
         protected virtual void FixedUpdate()
         {
             cc.UpdateMotor();               // updates the ThirdPersonMotor methods
-            cc.ControlLocomotionType();     // handle the controller locomotion type and movespeed
+            if(GetInput(out NetworkInputData data))
+            {
+                cc.ControlLocomotionType(data);     // handle the controller locomotion type and movespeed
+            }
+            
             cc.ControlRotationType();       // handle the controller rotation type
         }
 
@@ -48,23 +52,30 @@ namespace Invector.vCharacterController
             //    cc.UpdateMotor();               // updates the ThirdPersonMotor methods
             //    cc.ControlLocomotionType();     // handle the controller locomotion type and movespeed
             //    cc.ControlRotationType();       // handle the controller rotation type
+            if (cc)
+            {
+                InputHandle();                  // update the input methods
+                cc.UpdateAnimator();            // updates the Animator Parameters
+                                                //cc.CursorManager();
+            }
 
-            InputHandle();                  // update the input methods
-            cc.UpdateAnimator();            // updates the Animator Parameters
-            //cc.CursorManager();
         }
 
 
         protected virtual void Update()
         {
             //InputHandle();                  // update the input methods
-            cc.UpdateAnimator();            // updates the Animator Parameters
+            //cc.UpdateAnimator();            // updates the Animator Parameters
             cc.CursorManager();
         }
 
         public virtual void OnAnimatorMove()
         {
-            cc.ControlAnimatorRootMotion(); // handle root motion animations 
+            Debug.Log(GetInput(out NetworkInputData data2));
+            if (GetInput(out NetworkInputData data))
+            {
+                cc.ControlAnimatorRootMotion(data); // handle root motion animations 
+            }            
         }
 
         #region Basic Locomotion Inputs
@@ -94,15 +105,15 @@ namespace Invector.vCharacterController
         }
         protected virtual void InputHandle()
         {
-            if (cc && GetInput(out NetworkInputData data))
+            if (GetInput(out NetworkInputData data))
             {
                 MoveInput(data);
                 CameraInput();
                 SprintInput(data);
                 StrafeInput(data);
-                JumpInput();
-                DashInput();
-                AttackInput();
+                JumpInput(data);
+                DashInput(data);
+                AttackInput(data);
             }
         }
 
@@ -151,7 +162,10 @@ namespace Invector.vCharacterController
         protected virtual void StrafeInput(NetworkInputData data)
         {
             if (data.strafe)
+            {
+                data.strafe = false;
                 cc.Strafe();
+            }
         }
 
         protected virtual void SprintInput(NetworkInputData data)
@@ -188,21 +202,32 @@ namespace Invector.vCharacterController
         /// <summary>
         /// Input to trigger the Jump 
         /// </summary>
-        protected virtual void JumpInput()
+        protected virtual void JumpInput(NetworkInputData data)
         {
-            if (Input.GetKeyDown(jumpInput) && JumpConditions())
+            //Debug.Log("Jump: " + data.jumpInput);
+            if (data.jumpInput && JumpConditions())
+            {
+                data.jumpInput = false;
+                Debug.Log("Attack: " + data.jumpInput);
+                
                 cc.Jump();
+            }
         }
-        protected virtual void DashInput()
+        protected virtual void DashInput(NetworkInputData data)
         {
-            if (Input.GetKeyDown(dashInput) && DashConditions())
+            if (data.dashInput && DashConditions())
+            {
+                data.dashInput = false;
                 cc.Dash();
+            }                
         }
 
-        protected virtual void AttackInput()
+        protected virtual void AttackInput(NetworkInputData data)
         {
-            if (Input.GetKey(attackInput) && AttackConditions())
+            //Debug.Log("Attack: " + data.attackInput);
+            if (data.attackInput && AttackConditions())
             {
+                data.attackInput = false;
                 cc.Attack();
             }
         }
