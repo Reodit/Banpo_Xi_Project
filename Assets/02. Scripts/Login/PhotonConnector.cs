@@ -9,26 +9,31 @@ using UnityEngine.SceneManagement;
 
 public class PhotonConnector : MonoBehaviour, INetworkRunnerCallbacks
 {
+    [SerializeField] NetworkManager _networkManager;
+    [SerializeField] RoomInfo _roomInfo;
+    
     string _roomName;
     NetworkRunner _runner;
     LoginUI _loginUI;
     
-    
     #region MonoBehaviour Callbacks
+
+    void Awake()
+    {
+        DontDestroyOnLoad(gameObject);
+    }
 
     void Start()
     {
-        _loginUI = FindObjectOfType<LoginUI>();
+        if (SceneManager.GetActiveScene().buildIndex == 0)
+        {
+            _loginUI = FindObjectOfType<LoginUI>();
+        }
         if (!_runner)
         {
             _runner = gameObject.AddComponent<NetworkRunner>();
             _runner.ProvideInput = true;
         }
-    }
-
-    void Update()
-    {
-        
     }
 
     #endregion
@@ -51,7 +56,14 @@ public class PhotonConnector : MonoBehaviour, INetworkRunnerCallbacks
 
     #region Private Callbacks
 
-    
+    void UpdateSessionInfo(PlayerRef player)
+    {
+        Debug.Log($"_runner.SessionInfo.PlayerCount : {_runner.SessionInfo.PlayerCount}");
+        Debug.Log($"NetworkManager.Instance : {NetworkManager.Instance}");
+        Debug.Log($"_runner.SessionInfo : {_runner.SessionInfo}");
+        NetworkManager.Instance.PlayerCount = _runner.SessionInfo.PlayerCount;
+        _loginUI.SetPlayer(player);
+    }
 
     #endregion
 
@@ -60,11 +72,18 @@ public class PhotonConnector : MonoBehaviour, INetworkRunnerCallbacks
     public void OnPlayerJoined(NetworkRunner runner, PlayerRef player)
     {
         Debug.Log("OnPlayerJoined");
+        if (runner.GameMode == GameMode.Host)
+        {
+            runner.Spawn(_networkManager, Vector3.zero, Quaternion.identity, player);
+        }
+        // runner.Spawn(_roomInfo, Vector3.zero, Quaternion.identity, player);
+        UpdateSessionInfo(player);
     }
 
     public void OnPlayerLeft(NetworkRunner runner, PlayerRef player)
     {
         Debug.Log($"OnPlayerLeft");
+        UpdateSessionInfo(player);
     }
 
     public void OnInput(NetworkRunner runner, NetworkInput input)
@@ -110,8 +129,6 @@ public class PhotonConnector : MonoBehaviour, INetworkRunnerCallbacks
     public void OnSessionListUpdated(NetworkRunner runner, List<SessionInfo> sessionList)
     {
         Debug.Log("OnSessionListUpdated");
-        _loginUI.InstantiateRoomInfo();
-        
     }
 
     public void OnCustomAuthenticationResponse(NetworkRunner runner, Dictionary<string, object> data)

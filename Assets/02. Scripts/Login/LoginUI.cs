@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using Fusion;
 using TMPro;
 using UnityEngine;
@@ -9,20 +10,22 @@ public class LoginUI : MonoBehaviour
 {
     [SerializeField] GameObject _loginPanel;
     [SerializeField] Button _loginButton;
+    [SerializeField] GameObject _loadingPanel;
     [SerializeField] GameObject _roomPanel;
     [SerializeField] TMP_Text _nickNameText;
     [SerializeField] TMP_InputField _loginInputField;
     [SerializeField] TMP_InputField _roomNameInputField;
     [SerializeField] Button _createButton;
     [SerializeField] Button _joinButton;
+    [SerializeField] GameObject _roomListPanel;
     [SerializeField] GameObject _content;
-    [SerializeField] GameObject _roomInfo;
-
+    [SerializeField] RoomInfo _roomInfo;
+    
     string _nickName;
     PhotonConnector _photonConnector;
     PlayfabConnector _playfabConnector;
-    List<RoomInfo> _roomList = new List<RoomInfo>();
-
+    Dictionary<PlayerRef, RoomInfo> _roomInfoDict = new Dictionary<PlayerRef, RoomInfo>();
+    public PlayerRef Player { get; private set; }
 
     #region MonoBehaviourCallbacks
     
@@ -35,16 +38,22 @@ public class LoginUI : MonoBehaviour
         _createButton.onClick.AddListener(OnClickCreateButton);
         _joinButton.onClick.AddListener(OnClickJoinButton);
         
+        NetworkManager.OnlobbyChanged += ChangeLobbyState;
     }
     #endregion
 
     
     #region Public Callbacks
 
-    
-    public void InstantiateRoomInfo()
+    public void ActiveLobbyPanel()
     {
-        Instantiate(_roomInfo, Vector3.zero, Quaternion.identity, _content.transform); 
+        _loadingPanel.SetActive(false);
+        _roomPanel.SetActive(true);
+    }
+
+    public void SetPlayer(PlayerRef player)
+    {
+        Player = player;
     }
     
     #endregion
@@ -63,9 +72,10 @@ public class LoginUI : MonoBehaviour
         if (!string.IsNullOrEmpty(_nickName))
         {
             _loginPanel.SetActive(false);
-            _roomPanel.SetActive(true);
+            _loadingPanel.SetActive(true);
             UpdateNickName();
         }
+        
     }
 
     void UpdateNickName()
@@ -78,8 +88,8 @@ public class LoginUI : MonoBehaviour
     {
         string sessionName = _roomNameInputField.text;
         _photonConnector.StartGame(GameMode.Host, sessionName);
-        // 룸 참가 후 UI 넣기
-        
+        _roomPanel.SetActive(false);
+        _loadingPanel.SetActive(true);
     }
     
     // 방 참가
@@ -87,20 +97,40 @@ public class LoginUI : MonoBehaviour
     {
         string sessionName = _roomNameInputField.text;
         _photonConnector.StartGame(GameMode.Client, sessionName);
-        // 룸 참가 후 UI 넣기
+        _roomPanel.SetActive(false);
+        _loadingPanel.SetActive(true);
     }
-    
-    
 
-    
+    void ChangeLobbyState(NetworkManager networkManager)
+    {
+        if (_roomInfoDict.ContainsKey(Player))
+        {
+            Destroy(_roomInfoDict[Player]);
+            _roomInfoDict.Remove(Player);
+        }
+        else
+        {
+            if (_roomInfoDict.Count < networkManager.PlayerCount)
+            {
+                foreach (PlayerRef player in networkManager.Runner.ActivePlayers)
+                {
+                    if (!_roomInfoDict.ContainsKey(player))
+                    {
+                        RoomInfo roomInfo = Instantiate(_roomInfo, Vector3.zero, Quaternion.identity, _content.transform);
+                        roomInfo.SetPlayer(player);
+                        _roomInfoDict.Add(player, roomInfo);
+                    }
+                }
+            }
+        }
+        
+        _loadingPanel.SetActive(false);
+        _roomListPanel.SetActive(true);
+    }
 
     #endregion
 
     #region PhotonFusionCallBacks
     
-    
-    
     #endregion
-
-    
 }

@@ -7,9 +7,10 @@ using UnityEngine;
 
 public class PlayfabConnector : MonoBehaviour
 {
-
     string _userName;
     const string TITLE_ID = "D2DC5";
+
+    LoginUI _loginUI;
     
     #region MonoBehaviour Callbacks
 
@@ -19,6 +20,8 @@ public class PlayfabConnector : MonoBehaviour
         {
             PlayFabSettings.TitleId = TITLE_ID;
         }
+
+        _loginUI = FindObjectOfType<LoginUI>();
     }
 
     #endregion
@@ -73,7 +76,8 @@ public class PlayfabConnector : MonoBehaviour
     
     void OnUpdateUserTitleNameSucceed(UpdateUserTitleDisplayNameResult obj)
     {
-        Debug.Log($"OnUpdateUserTitleNameSucceed, {obj}");    
+        Debug.Log($"OnUpdateUserTitleNameSucceed, {obj}");
+        _loginUI.ActiveLobbyPanel();
     }
 
     void OnPlayfabFailed(PlayFabError obj)
