@@ -7,6 +7,7 @@ public class EnemyStats : MonoBehaviour
     public int healthLevel = 100;
     public int maxHealth;
     public int currentHealth;
+    
 
     Animator animator;
 

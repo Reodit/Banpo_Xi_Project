@@ -5,7 +5,6 @@ using UnityEngine;
 public class DamageCollider : MonoBehaviour
 {
     Collider damageCollider;
-
     public int currentWeaponDamage = 25;
 
     private void Awake()
@@ -14,7 +13,6 @@ public class DamageCollider : MonoBehaviour
         damageCollider.gameObject.SetActive(true); 
         damageCollider.isTrigger = true;
         damageCollider.enabled = false;
-         
     }
     public void EnableDamageCollider()
     {

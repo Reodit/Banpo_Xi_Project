@@ -126,7 +126,7 @@ namespace Invector.vCharacterController
         /// <returns></returns>
         protected virtual bool JumpConditions()
         {
-            return cc.isGrounded && cc.GroundAngle() < cc.slopeLimit && !cc.isJumping && !cc.stopMove && !cc.isDie;
+            return cc.isGrounded && cc.GroundAngle() < cc.slopeLimit && !cc.isJumping  && !cc.isDie;
         }
         protected virtual bool DashConditions()
         {
@@ -134,7 +134,7 @@ namespace Invector.vCharacterController
         }
         protected virtual bool AttackConditions()
         {
-            return cc.isGrounded && !cc.isJumping && !cc.isDashing && !cc.isDie;
+            return cc.isGrounded && !cc.isJumping && !cc.isDashing && !cc.isDie && !cc.isAttacking;
         }
         protected virtual bool SkillQConditions()
         {

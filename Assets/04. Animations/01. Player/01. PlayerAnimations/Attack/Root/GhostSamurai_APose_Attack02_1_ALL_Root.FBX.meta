@@ -593,6 +593,13 @@ ModelImporter:
         floatParameter: 0
         intParameter: 0
         messageOptions: 0
+      - time: 0.16098876
+        functionName: PlayWeaponFX
+        data: 
+        objectReferenceParameter: {instanceID: 0}
+        floatParameter: 0
+        intParameter: 4
+        messageOptions: 0
       transformMask: []
       maskType: 3
       maskSource: {instanceID: 0}
