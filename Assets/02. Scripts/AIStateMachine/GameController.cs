@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public enum Phase { Normal = 0, Berserk, Groggy };
+public enum Phase { Normal = 0, FireAttackPhase, FlyAttackPhase, Die };
 
 public class GameController : MonoBehaviour
 {
@@ -35,7 +35,16 @@ public class GameController : MonoBehaviour
         // 모든 에이전트의 Updated()를 호출해 에이전트 구동
         for (int i = 0; i < entitys.Count; ++i)
         {
-            entitys[i].Updated();
+            if (entitys[i])
+            {
+                entitys[i].Updated();
+            }
+
+            else
+            {
+                Debug.Log("적이 할당되지 않거나 모두 Destroy 되었습니다.");
+                return;
+            }
         }
     }
 }
