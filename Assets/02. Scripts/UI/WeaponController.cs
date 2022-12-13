@@ -36,6 +36,6 @@ public class WeaponController : MonoBehaviour
     private void NumerHitBox()
     {
         var numBox = Instantiate(numberHitBox, target, Quaternion.identity);
-        Destroy(numBox, hitBoxDisappearTime);
+        //Destroy(numBox, hitBoxDisappearTime);
     }
 }
