@@ -11,10 +11,8 @@ public class Boss_Dragon : BaseGameEntity
     public int HP;                                              // 체력
     [SerializeField]
     int MaxHP = 10000;
-    [SerializeField]
-    int page2HP = 7000;
-    [SerializeField]
-    int page3HP = 4000;
+    public int page2HP = 7000;
+    public int page3HP = 4000;
 
 
 
