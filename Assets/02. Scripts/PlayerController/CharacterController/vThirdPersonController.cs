@@ -10,6 +10,7 @@ namespace Invector.vCharacterController
             {
                 Cursor.lockState = CursorLockMode.None;
                 Cursor.visible = true;
+                
             }
             else if (Cursor.lockState == CursorLockMode.None)
             {

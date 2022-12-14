@@ -4009,7 +4009,7 @@ GameObject:
   - component: {fileID: 321149148531110314}
   m_Layer: 0
   m_Name: Blue
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -4046,10 +4046,9 @@ MonoBehaviour:
   ap: 0
   currentPhase: 0
   players:
-  - {fileID: 4297191204725671628, guid: 9a91518cd31fc44ffaf21e376e7a399b, type: 3}
-  - {fileID: 4297191204725671628, guid: 9a91518cd31fc44ffaf21e376e7a399b, type: 3}
+  - {fileID: 8121769020295867995, guid: 5951124b400527f4c9452be281c5cfe3, type: 3}
   mEnemyAggroformat: 0
-  idleTime: 2
+  idleTime: 1
   animator: {fileID: 0}
 --- !u!95 &521491593519360556
 Animator:
@@ -4081,8 +4080,8 @@ NavMeshAgent:
   m_Enabled: 1
   m_AgentTypeID: 0
   m_Radius: 0.5
-  m_Speed: 15
-  m_Acceleration: 15
+  m_Speed: 5
+  m_Acceleration: 50
   avoidancePriority: 50
   m_AngularSpeed: 400
   m_StoppingDistance: 0
