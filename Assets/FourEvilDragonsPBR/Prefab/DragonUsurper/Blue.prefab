@@ -552,7 +552,7 @@ GameObject:
   - component: {fileID: 483114}
   m_Layer: 0
   m_Name: Head
-  m_TagString: Untagged
+  m_TagString: ParticleParts
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -2317,7 +2317,7 @@ GameObject:
   - component: {fileID: 466436}
   m_Layer: 0
   m_Name: Jaw02
-  m_TagString: ParticleParts
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -4043,9 +4043,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3f30d21ee6bee4a8cac7ba47ff7e18f0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  hp: 0
+  HP: 0
   ap: 0
   currentPhase: 0
+  IsCurrentAnimaitionStart: 0
+  IsPlayerExistNearby: 0
   idleTime: 2
 --- !u!95 &521491593519360556
 Animator:

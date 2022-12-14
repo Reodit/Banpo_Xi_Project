@@ -8,7 +8,7 @@ using UnityEngine.AI;
 [RequireComponent (typeof(NavMeshAgent))]
 public class Boss_Dragon : BaseGameEntity
 {
-    [SerializeField] private int hp;            // 체력
+    public int HP;            // 체력
     [SerializeField] private int ap;            // 공격력 
     [SerializeField] private Phase currentPhase;                 // 현재 페이즈
     private EnemyAggroformat mEnemyAggroformat;
@@ -16,20 +16,14 @@ public class Boss_Dragon : BaseGameEntity
     private const float CALCULATE_DESTINATIONTERM = 0.2f;
     public EnemyAggro mEnemyAggro { get; private set; }
     public NavMeshAgent mNavMeshAgent { get; private set; }
-    public bool IsCurrentAnimaitionStart { get; set; }
     public bool IsInvincible { get; private set; }
-    public bool IsPlayerExistNearby { get; set; }
+    public bool IsCurrentAnimaitionStart;
+    public bool IsPlayerExistNearby;
     public float idleTime = 3f;
     // Dragon이 가지고 있는 모든 상태, 현재 상태.
     private State[] states;
     private State currentState;
     private Animator animator;
-
-    public int HP
-    {
-        set => hp = 100;
-        get => hp;
-    }
 
     public int AP
     {
@@ -83,7 +77,7 @@ public class Boss_Dragon : BaseGameEntity
         mEnemyAggro = new EnemyAggro(null, players);
         mEnemyAggro.InitCurrentPlayers();
 
-        hp = 100;
+        HP = 100;
         ap = 0;
         currentPhase = Phase.Normal;
         IsInvincible = false;
@@ -127,19 +121,19 @@ public class Boss_Dragon : BaseGameEntity
             CurrentAnimtionPlayCheck();
             currentState.Execute(this);
             
-            if (currentPhase == Phase.Normal && hp <= 70)
+            if (currentPhase == Phase.Normal && HP <= 70)
             {
                 IsInvincible = true;
                 currentPhase = Phase.FireAttackPhase;
                 ForcedChangeState(Boss_Dragon_States.Screaming);
             }
-            else if (currentPhase == Phase.FireAttackPhase && hp <= 40)
+            else if (currentPhase == Phase.FireAttackPhase && HP <= 40)
             {
                 IsInvincible = true;
                 currentPhase = Phase.FlyAttackPhase;
                 ForcedChangeState(Boss_Dragon_States.Screaming);
             }
-            else if (currentPhase == Phase.FlyAttackPhase && hp <= 0)
+            else if (currentPhase == Phase.FlyAttackPhase && HP <= 0)
             {
                 IsInvincible = true;
                 currentPhase = Phase.Die;
