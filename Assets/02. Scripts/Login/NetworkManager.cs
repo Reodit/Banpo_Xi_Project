@@ -40,6 +40,11 @@ public class NetworkManager : NetworkBehaviour
         OnlobbyChanged?.Invoke(Instance);
     }
 
+    public override void Spawned()
+    {
+        
+    }
+
     #endregion
     
     

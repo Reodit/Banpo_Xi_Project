@@ -11,10 +11,12 @@ public class PhotonConnector : MonoBehaviour, INetworkRunnerCallbacks
     public NetworkRunner _runner { get; private set; }
     
     [SerializeField] NetworkManager _networkManager;
-    
+    [SerializeField] NetworkObject _networkObject;
     string _roomName;
     LoginUI _loginUI;
-    
+
+    Dictionary<PlayerRef, NetworkObject> _playerDict = new Dictionary<PlayerRef, NetworkObject>();
+
     #region MonoBehaviour Callbacks
 
     void Awake()
@@ -87,8 +89,10 @@ public class PhotonConnector : MonoBehaviour, INetworkRunnerCallbacks
         Debug.Log("OnPlayerJoined");
         if (runner.GameMode == GameMode.Host)
         {
+            Debug.Log($"_networkManager : {_networkManager}");
             _networkManager = runner.Spawn(_networkManager, Vector3.zero, Quaternion.identity, player);
         }
+
         UpdateSessionInfo(player);
         if (runner.LocalPlayer)
         {
@@ -100,6 +104,12 @@ public class PhotonConnector : MonoBehaviour, INetworkRunnerCallbacks
     {
         Debug.Log($"OnPlayerLeft");
         UpdateSessionInfo(player);
+        if (_playerDict.TryGetValue(player, out NetworkObject networkObject))
+        {
+            runner.Despawn(networkObject);
+            _playerDict.Remove(player);
+        }
+        
     }
 
     public void OnInput(NetworkRunner runner, NetworkInput input)
@@ -164,7 +174,12 @@ public class PhotonConnector : MonoBehaviour, INetworkRunnerCallbacks
 
     public void OnSceneLoadDone(NetworkRunner runner)
     {
-        Debug.Log("OnSceneLoadDone");
+        if (runner.LocalPlayer)
+        {
+            Debug.Log($"_networkObject : {_networkObject}");
+            NetworkObject networkObject = runner.Spawn(_networkObject, new Vector3(56.12501f, -12.77073f, 233.6112f), Quaternion.identity, runner.LocalPlayer);
+            _playerDict.Add(runner.LocalPlayer, networkObject);
+        }
     }
 
     public void OnSceneLoadStart(NetworkRunner runner)

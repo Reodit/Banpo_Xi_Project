@@ -9,6 +9,6 @@ EditorBuildSettings:
     path: Assets/01. Scenes/Login/LoginScene.unity
     guid: 4eeb24efeb155df4e81ec71e009e5bd0
   - enabled: 1
-    path: Assets/01. Scenes/SampleScene.unity
-    guid: 9fc0d4010bbf28b4594072e72b8655ab
+    path: Assets/01. Scenes/BossMap/BossRaidIslandMap.unity
+    guid: d99b3234899e40a4ca605ecf29f67198
   m_configObjects: {}
