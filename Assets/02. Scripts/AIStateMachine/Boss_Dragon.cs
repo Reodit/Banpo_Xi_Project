@@ -8,24 +8,22 @@ using UnityEngine.AI;
 [RequireComponent (typeof(NavMeshAgent))]
 public class Boss_Dragon : BaseGameEntity
 {
-    public int HP;            // 체력
+    public int HP;                                              // 체력
     [SerializeField]
     int MaxHP = 10000;
-    [SerializeField]
-    int page2HP = 7000;
-    [SerializeField]
-    int page3HP = 4000;
+    public int page2HP = 7000;
+    public int page3HP = 4000;
 
 
 
-    [SerializeField] private int ap;            // 공격력 
+    [SerializeField] private int ap;                            // 공격력 
     [SerializeField] private Phase currentPhase;                 // 현재 페이즈
     private EnemyAggroformat mEnemyAggroformat;
     private GameObject[] players;
     private const float CALCULATE_DESTINATIONTERM = 0.2f;
     public EnemyAggro mEnemyAggro { get; private set; }
     public NavMeshAgent mNavMeshAgent { get; private set; }
-    public bool IsInvincible { get; private set; }
+    public bool IsInvincible;
     public bool IsCurrentAnimaitionStart;
     public bool IsPlayerExistNearby;
     public float idleTime = 3f;
@@ -33,6 +31,7 @@ public class Boss_Dragon : BaseGameEntity
     private State[] states;
     private State currentState;
     private Animator animator;
+    private EnemyFOV enemyFOV;
 
     public int AP
     {
@@ -57,6 +56,11 @@ public class Boss_Dragon : BaseGameEntity
         animator = GetComponentInChildren<Animator>();
         mNavMeshAgent = GetComponent<NavMeshAgent>();
 
+    }
+
+    private void Start()
+    {
+        enemyFOV.InitFOV();
     }
 
     public override void Setup(string name)
@@ -90,7 +94,8 @@ public class Boss_Dragon : BaseGameEntity
         ap = 0;
         currentPhase = Phase.Normal;
         IsInvincible = false;
-        
+
+        enemyFOV = new EnemyFOV();
         // 기본 상태 설정
         ChangeState(Boss_Dragon_States.Idle);
         Debug.Log("SetUpComplete");

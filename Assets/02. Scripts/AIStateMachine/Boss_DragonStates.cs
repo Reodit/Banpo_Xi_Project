@@ -199,6 +199,7 @@ namespace Boss_DragonStates
 
         public override void Exit(Boss_Dragon entity)
         {
+            entity.IsInvincible = false;
             entity.PrintText("Screaming Exit");
         }
     }

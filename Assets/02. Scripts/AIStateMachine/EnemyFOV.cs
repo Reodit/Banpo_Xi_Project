@@ -7,6 +7,7 @@ public class EnemyFOV : MonoBehaviour
     public float ViewRange = 15f;
     public float ViewAngle = 100f;
 
+    private GameObject bossDragonObj;
     private Boss_Dragon boss_dragon;
     private Transform enemyTr;
     private Transform playerTr;
@@ -14,10 +15,11 @@ public class EnemyFOV : MonoBehaviour
     private LayerMask obstacleLayer;
     private LayerMask layerMask;
 
-    private void InitFOV()
+    public void InitFOV()
     {
-        boss_dragon = GetComponent<Boss_Dragon>();
-        enemyTr = GetComponent<Transform>();
+        bossDragonObj = GameObject.FindGameObjectWithTag("Enemy");
+        boss_dragon = bossDragonObj.GetComponent<Boss_Dragon>();
+        enemyTr = boss_dragon.transform;
         playerTr = boss_dragon.mEnemyAggro.Target.transform;
 
         playerLayer = LayerMask.GetMask("Player");
