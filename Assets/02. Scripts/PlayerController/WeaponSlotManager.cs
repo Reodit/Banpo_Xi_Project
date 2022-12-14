@@ -39,7 +39,7 @@ public class WeaponSlotManager : MonoBehaviour
             LoadRightWeaponDamageCollider();
         }
     }
-    #region Handle Weapon Damage Collider
+     #region Handle Weapon Damage Collider
     private void LoadLeftWeaponDamageCollider()
     {
 

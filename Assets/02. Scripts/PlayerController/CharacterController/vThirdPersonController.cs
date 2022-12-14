@@ -10,6 +10,7 @@ namespace Invector.vCharacterController
             {
                 Cursor.lockState = CursorLockMode.None;
                 Cursor.visible = true;
+                
             }
             else if (Cursor.lockState == CursorLockMode.None)
             {
@@ -149,14 +150,18 @@ namespace Invector.vCharacterController
             isDashing = true;
             isAttacking = false;
             animator.CrossFadeInFixedTime("Dash", 0.1f);
-            animator.ResetTrigger("Attack");
+            //animator.ResetTrigger("Attack");
         }
         public virtual void Attack()
         {
+            int attackNum = Random.Range(1, 13);  
             attackCounter = attackTimer;
             isAttacking = true;
+            animator.CrossFadeInFixedTime("Attack" + attackNum, 0.1f);
 
-            animator.SetTrigger("Attack");
+
+
+            //animator.SetTrigger("Attack");
         }
 
 
