@@ -4,30 +4,15 @@ using Boss_DragonStates;
 using UnityEngine;
 using UnityEngine.AI;
 
-public enum Boss_Dragon_States
-{
-    Idle = 0, 
-    NormalAttack, 
-    BreathOnAir, 
-    Flying, 
-    ClawAttack, 
-    Defend, 
-    BreathOnLand,
-    Die,
-    Screaming,
-    Chase,
-    ChaseOnAir
-}
-
-
+[RequireComponent (typeof(Animator))]
 [RequireComponent (typeof(NavMeshAgent))]
 public class Boss_Dragon : BaseGameEntity
 {
     [SerializeField] private int hp;            // 체력
     [SerializeField] private int ap;            // 공격력 
     [SerializeField] private Phase currentPhase;                 // 현재 페이즈
-    [SerializeField] private GameObject[] players;
-    [SerializeField] private EnemyAggroformat mEnemyAggroformat;
+    private EnemyAggroformat mEnemyAggroformat;
+    private GameObject[] players;
     private const float CALCULATE_DESTINATIONTERM = 0.2f;
     public EnemyAggro mEnemyAggro { get; private set; }
     public NavMeshAgent mNavMeshAgent { get; private set; }
@@ -38,7 +23,7 @@ public class Boss_Dragon : BaseGameEntity
     // Dragon이 가지고 있는 모든 상태, 현재 상태.
     private State[] states;
     private State currentState;
-    [SerializeField] private Animator animator;
+    private Animator animator;
 
     public int HP
     {
@@ -77,9 +62,9 @@ public class Boss_Dragon : BaseGameEntity
         base.Setup(name);
 
         // 생성되는 오브젝트 이름 설정
-        gameObject.name = $"{ID:D2}_Student_{name}";
+        gameObject.name = $"{ID:D2}{name}";
 
-        // Student가 가질 수 있는 상태 개수만큼 메모리 할당, 각 상태에 클래스 메모리 할당
+        // Dragon 상태 개수만큼 메모리 할당, 각 상태에 클래스 메모리 할당
         states = new State[11];
         states[(int)Boss_Dragon_States.Idle] = new Boss_DragonStates.Idle();
         states[(int)Boss_Dragon_States.NormalAttack] = new Boss_DragonStates.NormalAttack();
@@ -92,12 +77,8 @@ public class Boss_Dragon : BaseGameEntity
         states[(int)Boss_Dragon_States.BreathOnAir] = new Boss_DragonStates.BreathOnAir();
         states[(int)Boss_Dragon_States.BreathOnLand] = new Boss_DragonStates.BreathOnLand();
         states[(int)Boss_Dragon_States.ChaseOnAir] = new Boss_DragonStates.ChaseOnAir();
-        
-        for (int i = 0; i < players.Length; ++i)
-        {
-            players[i] = Instantiate(players[i], this.transform.position + new Vector3(0, 0, 10), Quaternion.identity);
-            players[i].name = "Player " + i;
-        }
+
+        players = GameObject.FindGameObjectsWithTag("Player");
         
         mEnemyAggro = new EnemyAggro(null, players);
         mEnemyAggro.InitCurrentPlayers();
