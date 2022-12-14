@@ -9,6 +9,7 @@ TagManager:
   - ManaSprite
   - HealthSprite
   - Enemy
+  - ParticleParts
   layers:
   - Default
   - TransparentFX
