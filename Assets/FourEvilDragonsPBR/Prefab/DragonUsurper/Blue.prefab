@@ -4050,6 +4050,7 @@ MonoBehaviour:
   page3HP: 4000
   ap: 0
   currentPhase: 0
+  IsInvincible: 0
   IsCurrentAnimaitionStart: 0
   IsPlayerExistNearby: 0
   idleTime: 2

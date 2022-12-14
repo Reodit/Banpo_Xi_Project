@@ -39,6 +39,7 @@ public class DamageCollider : MonoBehaviour
             TargetMonster = GameObject.FindGameObjectWithTag("Enemy");
             boss_Dragon = TargetMonster.GetComponent<Boss_Dragon>();
 
+            if (boss_Dragon.IsInvincible) return;
             target = this.gameObject.transform.position;
             currentWeaponDamage = Random.Range(90, 110);
             NumerHitBox();

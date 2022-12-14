@@ -25,7 +25,7 @@ public class PortalController : MonoBehaviour
     [SerializeField]
     Transform linkPortalTrans;
     [SerializeField]
-    CinemachineVirtualCamera vcam1;
+    CinemachineFreeLook vcam1;
     [SerializeField]
     Light pointLight;
     vThirdPersonController playerScript;
