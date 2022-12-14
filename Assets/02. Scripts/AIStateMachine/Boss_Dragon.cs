@@ -4,47 +4,35 @@ using Boss_DragonStates;
 using UnityEngine;
 using UnityEngine.AI;
 
-public enum Boss_Dragon_States
-{
-    Idle = 0, 
-    NormalAttack, 
-    BreathOnAir, 
-    Flying, 
-    ClawAttack, 
-    Defend, 
-    BreathOnLand,
-    Die,
-    Screaming,
-    Chase,
-    ChaseOnAir
-}
-
-
+[RequireComponent (typeof(Animator))]
 [RequireComponent (typeof(NavMeshAgent))]
 public class Boss_Dragon : BaseGameEntity
 {
-    [SerializeField] private int hp;            // 체력
+    public int HP;            // 체력
+    [SerializeField]
+    int MaxHP = 10000;
+    [SerializeField]
+    int page2HP = 7000;
+    [SerializeField]
+    int page3HP = 4000;
+
+
+
     [SerializeField] private int ap;            // 공격력 
     [SerializeField] private Phase currentPhase;                 // 현재 페이즈
-    [SerializeField] private GameObject[] players;
-    [SerializeField] private EnemyAggroformat mEnemyAggroformat;
+    private EnemyAggroformat mEnemyAggroformat;
+    private GameObject[] players;
     private const float CALCULATE_DESTINATIONTERM = 0.2f;
     public EnemyAggro mEnemyAggro { get; private set; }
     public NavMeshAgent mNavMeshAgent { get; private set; }
-    public bool IsCurrentAnimaitionStart { get; set; }
     public bool IsInvincible { get; private set; }
-    public bool IsPlayerExistNearby { get; set; }
+    public bool IsCurrentAnimaitionStart;
+    public bool IsPlayerExistNearby;
     public float idleTime = 3f;
     // Dragon이 가지고 있는 모든 상태, 현재 상태.
     private State[] states;
     private State currentState;
-    [SerializeField] private Animator animator;
-
-    public int HP
-    {
-        set => hp = 100;
-        get => hp;
-    }
+    private Animator animator;
 
     public int AP
     {
@@ -77,9 +65,9 @@ public class Boss_Dragon : BaseGameEntity
         base.Setup(name);
 
         // 생성되는 오브젝트 이름 설정
-        gameObject.name = $"{ID:D2}_Student_{name}";
+        gameObject.name = $"{ID:D2}{name}";
 
-        // Student가 가질 수 있는 상태 개수만큼 메모리 할당, 각 상태에 클래스 메모리 할당
+        // Dragon 상태 개수만큼 메모리 할당, 각 상태에 클래스 메모리 할당
         states = new State[11];
         states[(int)Boss_Dragon_States.Idle] = new Boss_DragonStates.Idle();
         states[(int)Boss_Dragon_States.NormalAttack] = new Boss_DragonStates.NormalAttack();
@@ -92,17 +80,13 @@ public class Boss_Dragon : BaseGameEntity
         states[(int)Boss_Dragon_States.BreathOnAir] = new Boss_DragonStates.BreathOnAir();
         states[(int)Boss_Dragon_States.BreathOnLand] = new Boss_DragonStates.BreathOnLand();
         states[(int)Boss_Dragon_States.ChaseOnAir] = new Boss_DragonStates.ChaseOnAir();
-        
-        for (int i = 0; i < players.Length; ++i)
-        {
-            players[i] = Instantiate(players[i], this.transform.position + new Vector3(0, 0, 10), Quaternion.identity);
-            players[i].name = "Player " + i;
-        }
+
+        players = GameObject.FindGameObjectsWithTag("Player");
         
         mEnemyAggro = new EnemyAggro(null, players);
         mEnemyAggro.InitCurrentPlayers();
 
-        hp = 100;
+        HP = MaxHP;
         ap = 0;
         currentPhase = Phase.Normal;
         IsInvincible = false;
@@ -146,19 +130,19 @@ public class Boss_Dragon : BaseGameEntity
             CurrentAnimtionPlayCheck();
             currentState.Execute(this);
             
-            if (currentPhase == Phase.Normal && hp <= 70)
+            if (currentPhase == Phase.Normal && HP <= page2HP)
             {
                 IsInvincible = true;
                 currentPhase = Phase.FireAttackPhase;
                 ForcedChangeState(Boss_Dragon_States.Screaming);
             }
-            else if (currentPhase == Phase.FireAttackPhase && hp <= 40)
+            else if (currentPhase == Phase.FireAttackPhase && HP <= page3HP)
             {
                 IsInvincible = true;
                 currentPhase = Phase.FlyAttackPhase;
                 ForcedChangeState(Boss_Dragon_States.Screaming);
             }
-            else if (currentPhase == Phase.FlyAttackPhase && hp <= 0)
+            else if (currentPhase == Phase.FlyAttackPhase && HP <= 0)
             {
                 IsInvincible = true;
                 currentPhase = Phase.Die;

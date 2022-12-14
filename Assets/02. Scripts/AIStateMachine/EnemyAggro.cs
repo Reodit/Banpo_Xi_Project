@@ -15,7 +15,7 @@ public class EnemyAggro
     {
         Target = target;
         _initPlayers = players;
-        CurrentPlayersCount = _initPlayers.Length;
+        CurrentPlayersCount = 20;
     }
 
     public void InitCurrentPlayers()
@@ -59,9 +59,12 @@ public class EnemyAggro
         
         for (int i = 0; i < CurrentPlayersCount; ++i)
         {
-            playerDistanceInfo.Add(
+            if (CurrentPlayers[i])
+            {
+                playerDistanceInfo.Add(
                 CurrentPlayers[i],
                 Vector3.Distance(enemyPosition, CurrentPlayers[i].transform.position));
+            }
         }
 
         Target = playerDistanceInfo.FirstOrDefault(x => x.Value == playerDistanceInfo.Values.Min()).Key;

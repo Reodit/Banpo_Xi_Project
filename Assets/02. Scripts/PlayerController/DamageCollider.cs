@@ -10,6 +10,9 @@ public class DamageCollider : MonoBehaviour
     GameObject numberHitBox;
     Vector3 target;
 
+    GameObject TargetMonster;
+    Boss_Dragon boss_Dragon;
+
     Collider damageCollider;
     public int currentWeaponDamage = 25;
 
@@ -26,21 +29,20 @@ public class DamageCollider : MonoBehaviour
     }
     public void DisableDamageCollider()
     {
-        damageCollider.enabled = false;
+        //damageCollider.enabled = false;
     }
     private void OnTriggerEnter(Collider collision)
     {
         Debug.Log("onTrigger");
         if (collision.CompareTag("Enemy"))
         {
-            EnemyStats enemyStats = collision.GetComponent<EnemyStats>();
+            TargetMonster = GameObject.FindGameObjectWithTag("Enemy");
+            boss_Dragon = TargetMonster.GetComponent<Boss_Dragon>();
 
-            if (enemyStats != null)
-            {
-                enemyStats.TakeDamage(currentWeaponDamage);
-                target = this.gameObject.transform.position;
-                NumerHitBox();
-            }
+            target = this.gameObject.transform.position;
+            currentWeaponDamage = Random.Range(90, 110);
+            NumerHitBox();
+            TakeDamage();
         }
     }
     private void NumerHitBox()
@@ -50,4 +52,8 @@ public class DamageCollider : MonoBehaviour
         Destroy(numBox, hitBoxDisappearTime);
     }
 
+    void TakeDamage()
+    {
+        boss_Dragon.HP -= currentWeaponDamage;
+    }
 }
