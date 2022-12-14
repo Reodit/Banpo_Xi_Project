@@ -29,11 +29,11 @@ public class DamageCollider : MonoBehaviour
     }
     public void DisableDamageCollider()
     {
-        //damageCollider.enabled = false;
+        damageCollider.enabled = false;
     }
     private void OnTriggerEnter(Collider collision)
     {
-        Debug.Log("onTrigger");
+        //Debug.Log("onTrigger");
         if (collision.CompareTag("Enemy"))
         {
             TargetMonster = GameObject.FindGameObjectWithTag("Enemy");
