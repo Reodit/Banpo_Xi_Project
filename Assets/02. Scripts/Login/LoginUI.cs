@@ -4,10 +4,13 @@ using System.Linq;
 using Fusion;
 using TMPro;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class LoginUI : MonoBehaviour
 {
+    public PlayerRef Player { get; private set; }
+    
     [SerializeField] GameObject _loginPanel;
     [SerializeField] Button _loginButton;
     [SerializeField] GameObject _loadingPanel;
@@ -19,13 +22,17 @@ public class LoginUI : MonoBehaviour
     [SerializeField] Button _joinButton;
     [SerializeField] GameObject _roomListPanel;
     [SerializeField] GameObject _content;
-    [SerializeField] RoomInfo _roomInfo;
+    [SerializeField] PlayerInfo playerInfo;
+    [SerializeField] TMP_Text _roomNameText;
+    [SerializeField] Button _roomBackButton;
+    
     
     string _nickName;
     PhotonConnector _photonConnector;
     PlayfabConnector _playfabConnector;
-    Dictionary<PlayerRef, RoomInfo> _roomInfoDict = new Dictionary<PlayerRef, RoomInfo>();
-    public PlayerRef Player { get; private set; }
+    Dictionary<PlayerRef, PlayerInfo> _roomInfoDict = new Dictionary<PlayerRef, PlayerInfo>();
+    
+    static Dictionary<PlayerRef, string> _playerDict = new Dictionary<PlayerRef, string>();
 
     #region MonoBehaviourCallbacks
     
@@ -37,8 +44,10 @@ public class LoginUI : MonoBehaviour
         _loginButton.onClick.AddListener(OnClickLoginButton);
         _createButton.onClick.AddListener(OnClickCreateButton);
         _joinButton.onClick.AddListener(OnClickJoinButton);
+        _roomBackButton.onClick.AddListener(OnClickBackButton);
         
-        NetworkManager.OnlobbyChanged += ChangeLobbyState;
+        
+        // NetworkManager.OnlobbyChanged += ChangeLobbyState;
     }
     #endregion
 
@@ -54,6 +63,11 @@ public class LoginUI : MonoBehaviour
     public void SetPlayer(PlayerRef player)
     {
         Player = player;
+    }
+
+    public void SetRoomName(string roomName)
+    {
+        _roomNameText.text = roomName;
     }
     
     #endregion
@@ -80,7 +94,7 @@ public class LoginUI : MonoBehaviour
 
     void UpdateNickName()
     {
-        _nickNameText.text = PlayerPrefs.GetString("NICKNAME");
+        _nickNameText.text = _nickName;
     }
     
     // 방 만들기
@@ -90,6 +104,7 @@ public class LoginUI : MonoBehaviour
         _photonConnector.StartGame(GameMode.Host, sessionName);
         _roomPanel.SetActive(false);
         _loadingPanel.SetActive(true);
+        
     }
     
     // 방 참가
@@ -101,11 +116,23 @@ public class LoginUI : MonoBehaviour
         _loadingPanel.SetActive(true);
     }
 
+    void OnClickBackButton()
+    {
+        _loginPanel.SetActive(true);
+        _roomPanel.SetActive(false);
+    }
+    
+    void OnClickLeaveButton()
+    {
+        _photonConnector.LeaveSession();
+    }
+
+
     void ChangeLobbyState(NetworkManager networkManager)
     {
         if (_roomInfoDict.ContainsKey(Player))
         {
-            Destroy(_roomInfoDict[Player]);
+            Destroy(_roomInfoDict[Player].gameObject);
             _roomInfoDict.Remove(Player);
         }
         else
@@ -116,16 +143,23 @@ public class LoginUI : MonoBehaviour
                 {
                     if (!_roomInfoDict.ContainsKey(player))
                     {
-                        RoomInfo roomInfo = Instantiate(_roomInfo, Vector3.zero, Quaternion.identity, _content.transform);
-                        roomInfo.SetPlayer(player);
-                        _roomInfoDict.Add(player, roomInfo);
+                        PlayerInfo playerInfo = Instantiate(this.playerInfo, Vector3.zero, Quaternion.identity, _content.transform);
+                        if (!_playerDict.ContainsKey(player) && networkManager.Runner.LocalPlayer)
+                        {
+                            _playerDict.Add(player, _nickName);
+                        }
+                        playerInfo.SetPlayer(player, _playerDict[player]);
+                        _roomInfoDict.Add(player, playerInfo);
                     }
                 }
             }
         }
-        
-        _loadingPanel.SetActive(false);
-        _roomListPanel.SetActive(true);
+
+        if (_loadingPanel.activeInHierarchy)
+        {
+            _loadingPanel.SetActive(false);
+            _roomListPanel.SetActive(true);
+        }
     }
 
     #endregion

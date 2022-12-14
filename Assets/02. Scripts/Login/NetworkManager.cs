@@ -18,12 +18,12 @@ public class NetworkManager : NetworkBehaviour
     {
         if (Instance)
         {
-            Destroy(this);
+            Destroy(gameObject);
         }
         else
         {
             Instance = this;
-            DontDestroyOnLoad(this);
+            DontDestroyOnLoad(gameObject);
         }
     }
 

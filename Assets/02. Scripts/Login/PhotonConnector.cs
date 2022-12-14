@@ -1,7 +1,6 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
-using System.Threading.Tasks;
+using System.Linq;
 using Fusion;
 using Fusion.Sockets;
 using UnityEngine;
@@ -9,11 +8,11 @@ using UnityEngine.SceneManagement;
 
 public class PhotonConnector : MonoBehaviour, INetworkRunnerCallbacks
 {
+    public NetworkRunner _runner { get; private set; }
+    
     [SerializeField] NetworkManager _networkManager;
-    [SerializeField] RoomInfo _roomInfo;
     
     string _roomName;
-    NetworkRunner _runner;
     LoginUI _loginUI;
     
     #region MonoBehaviour Callbacks
@@ -48,21 +47,35 @@ public class PhotonConnector : MonoBehaviour, INetworkRunnerCallbacks
             GameMode = gameMode,
             SessionName = sessionName,
             Scene = SceneManager.GetActiveScene().buildIndex,
-            SceneManager = gameObject.AddComponent<NetworkSceneManagerDefault>()
+            SceneManager = LevelManager.Instance
         });
     }
+
+    public void LoadSceneAsync(int index)
+    {
+        if (_runner.LocalPlayer)
+        {
+            _runner.SetActiveScene(SceneManager.GetActiveScene().buildIndex + index);
+        }
+    }
+
+    public void LeaveSession()
+    {
+        _runner.Shutdown();
+        LoadSceneAsync(-1);
+    }
     
+    
+
     #endregion
 
     #region Private Callbacks
 
     void UpdateSessionInfo(PlayerRef player)
     {
-        Debug.Log($"_runner.SessionInfo.PlayerCount : {_runner.SessionInfo.PlayerCount}");
-        Debug.Log($"NetworkManager.Instance : {NetworkManager.Instance}");
-        Debug.Log($"_runner.SessionInfo : {_runner.SessionInfo}");
-        NetworkManager.Instance.PlayerCount = _runner.SessionInfo.PlayerCount;
         _loginUI.SetPlayer(player);
+        Debug.Log($"_runner.ActivePlayers.Count() {_runner.ActivePlayers.Count()}");
+        _networkManager.PlayerCount = _runner.ActivePlayers.Count();
     }
 
     #endregion
@@ -74,10 +87,13 @@ public class PhotonConnector : MonoBehaviour, INetworkRunnerCallbacks
         Debug.Log("OnPlayerJoined");
         if (runner.GameMode == GameMode.Host)
         {
-            runner.Spawn(_networkManager, Vector3.zero, Quaternion.identity, player);
+            _networkManager = runner.Spawn(_networkManager, Vector3.zero, Quaternion.identity, player);
         }
-        // runner.Spawn(_roomInfo, Vector3.zero, Quaternion.identity, player);
         UpdateSessionInfo(player);
+        if (runner.LocalPlayer)
+        {
+            _runner.SetActiveScene(SceneManager.GetActiveScene().buildIndex + 1);
+        }
     }
 
     public void OnPlayerLeft(NetworkRunner runner, PlayerRef player)
@@ -156,6 +172,4 @@ public class PhotonConnector : MonoBehaviour, INetworkRunnerCallbacks
         Debug.Log("OnSceneLoadStart");
     }
     #endregion
-
-    
 }
