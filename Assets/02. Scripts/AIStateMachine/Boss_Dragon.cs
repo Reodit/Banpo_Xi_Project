@@ -9,6 +9,15 @@ using UnityEngine.AI;
 public class Boss_Dragon : BaseGameEntity
 {
     public int HP;            // 체력
+    [SerializeField]
+    int MaxHP = 10000;
+    [SerializeField]
+    int page2HP = 7000;
+    [SerializeField]
+    int page3HP = 4000;
+
+
+
     [SerializeField] private int ap;            // 공격력 
     [SerializeField] private Phase currentPhase;                 // 현재 페이즈
     private EnemyAggroformat mEnemyAggroformat;
@@ -77,7 +86,7 @@ public class Boss_Dragon : BaseGameEntity
         mEnemyAggro = new EnemyAggro(null, players);
         mEnemyAggro.InitCurrentPlayers();
 
-        HP = 100;
+        HP = MaxHP;
         ap = 0;
         currentPhase = Phase.Normal;
         IsInvincible = false;
@@ -121,13 +130,13 @@ public class Boss_Dragon : BaseGameEntity
             CurrentAnimtionPlayCheck();
             currentState.Execute(this);
             
-            if (currentPhase == Phase.Normal && HP <= 70)
+            if (currentPhase == Phase.Normal && HP <= page2HP)
             {
                 IsInvincible = true;
                 currentPhase = Phase.FireAttackPhase;
                 ForcedChangeState(Boss_Dragon_States.Screaming);
             }
-            else if (currentPhase == Phase.FireAttackPhase && HP <= 40)
+            else if (currentPhase == Phase.FireAttackPhase && HP <= page3HP)
             {
                 IsInvincible = true;
                 currentPhase = Phase.FlyAttackPhase;
