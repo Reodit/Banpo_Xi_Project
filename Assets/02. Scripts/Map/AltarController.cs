@@ -28,7 +28,7 @@ public class AltarController : MonoBehaviour
     [SerializeField]
     List<Light> pointLights = new List<Light>();
     [SerializeField]
-    CinemachineVirtualCamera vcam1;
+    CinemachineFreeLook vcam1;
     [SerializeField]
     Light pointLight;
     vThirdPersonController playerScript;
