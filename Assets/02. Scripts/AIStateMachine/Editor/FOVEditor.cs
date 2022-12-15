@@ -12,17 +12,14 @@ public class FOVEditor : Editor
 
         Handles.color = new Color(1, 1, 1, 0.2f);
 
-        Handles.DrawWireDisc(fov.transform.position,
+        Handles.DrawWireDisc(fov.bossDragonObj.transform.position,
             Vector3.up,
             fov.ViewRange);
 
-        Handles.DrawWireArc(fov.transform.position,
+        Handles.DrawSolidArc(fov.bossDragonObj.transform.position,
             Vector3.up,
             fromAnglePos,
             fov.ViewAngle,
             fov.ViewRange);
-
-        Handles.Label(fov.transform.position + (fov.transform.forward * 2f),
-            fov.ViewAngle.ToString());
     }
 }

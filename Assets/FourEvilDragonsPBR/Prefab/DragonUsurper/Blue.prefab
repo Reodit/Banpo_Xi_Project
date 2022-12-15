@@ -4008,6 +4008,7 @@ GameObject:
   - component: {fileID: 521491593519360556}
   - component: {fileID: 321149148531110314}
   - component: {fileID: 365893865109858353}
+  - component: {fileID: -6757958580198476566}
   m_Layer: 0
   m_Name: Blue
   m_TagString: Enemy
@@ -4050,6 +4051,7 @@ MonoBehaviour:
   page3HP: 4000
   ap: 0
   currentPhase: 0
+  IsInvincible: 0
   IsCurrentAnimaitionStart: 0
   IsPlayerExistNearby: 0
   idleTime: 2
@@ -4110,6 +4112,20 @@ MonoBehaviour:
   BreathEffect: {fileID: 163286, guid: 50daa816369323b42b56093bb108296f, type: 3}
   ClawAttackEffect: {fileID: 0}
   BiteAttactEffect: {fileID: 0}
+--- !u!114 &-6757958580198476566
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 194904}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 61eeb5bf541654baf9e3737dc8b0b1a5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ViewRange: 15
+  ViewAngle: 100
 --- !u!1 &196352
 GameObject:
   m_ObjectHideFlags: 0

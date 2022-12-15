@@ -21,8 +21,10 @@ public class Boss_Dragon : BaseGameEntity
     private EnemyAggroformat mEnemyAggroformat;
     private GameObject[] players;
     private const float CALCULATE_DESTINATIONTERM = 0.2f;
+    public float TargetRot { get; private set; } 
     public EnemyAggro mEnemyAggro { get; private set; }
     public NavMeshAgent mNavMeshAgent { get; private set; }
+    public float AnimationDelay { get; private set; }
     public bool IsInvincible;
     public bool IsCurrentAnimaitionStart;
     public bool IsPlayerExistNearby;
@@ -31,7 +33,7 @@ public class Boss_Dragon : BaseGameEntity
     private State[] states;
     private State currentState;
     private Animator animator;
-    private EnemyFOV enemyFOV;
+    public EnemyFOV enemyFOV;
 
     public int AP
     {
@@ -95,7 +97,7 @@ public class Boss_Dragon : BaseGameEntity
         currentPhase = Phase.Normal;
         IsInvincible = false;
 
-        enemyFOV = new EnemyFOV();
+        enemyFOV = GetComponent<EnemyFOV>();
         // 기본 상태 설정
         ChangeState(Boss_Dragon_States.Idle);
         Debug.Log("SetUpComplete");
@@ -103,14 +105,34 @@ public class Boss_Dragon : BaseGameEntity
 
     private IEnumerator UpdateDestination()
     {
-        mNavMeshAgent.SetDestination(mEnemyAggro.Target.transform.position);
+        Animator.Play("Chase1");
+        mNavMeshAgent.isStopped = false;
+        mNavMeshAgent.updateRotation = true;
 
-        while (mNavMeshAgent.remainingDistance > 0.1f)
+        while (mEnemyAggro.TargetDistance > 12f)
         {
-            mNavMeshAgent.SetDestination(mEnemyAggro.Target.transform.position);
+            Debug.Log(mNavMeshAgent.remainingDistance);
+            mNavMeshAgent.SetDestination(mEnemyAggro.Target.transform.position + new Vector3(1f, 0 , 1f) * 6f);
+            AnimationDelay += CALCULATE_DESTINATIONTERM;
             yield return new WaitForSeconds(CALCULATE_DESTINATIONTERM);
         }
+
+        Debug.Log("Out");
+        mNavMeshAgent.updateRotation = false;
+        mNavMeshAgent.isStopped = true;
         IsPlayerExistNearby = true;
+    }
+
+    private IEnumerator FaceTarget()
+    {
+        mNavMeshAgent.updateRotation = false;
+        while (!enemyFOV.isViewPlayer())
+        {
+            Vector3 direction = (mEnemyAggro.Target.transform.position - transform.position).normalized;
+            Quaternion lookRotation = Quaternion.LookRotation(direction);
+            transform.rotation = Quaternion.Slerp(transform.rotation, lookRotation, Time.fixedDeltaTime * 5f);
+            yield return new WaitForFixedUpdate();
+        }
     }
     
     public void DestinationCoroutineStart()
@@ -131,10 +153,9 @@ public class Boss_Dragon : BaseGameEntity
     {
         if (currentState != null)
         {
-            Debug.Log(currentPhase);
             CurrentAnimtionPlayCheck();
             currentState.Execute(this);
-            
+
             if (currentPhase == Phase.Normal && HP <= page2HP)
             {
                 IsInvincible = true;

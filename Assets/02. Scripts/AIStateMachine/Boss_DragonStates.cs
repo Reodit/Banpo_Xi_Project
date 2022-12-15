@@ -62,6 +62,8 @@ namespace Boss_DragonStates
         public override void Exit(Boss_Dragon entity)
         {
             entity.PrintText("Idle Exit");
+            entity.mNavMeshAgent.isStopped = false;
+            entity.mNavMeshAgent.updateRotation = true;
         }
     }
 
@@ -252,17 +254,19 @@ namespace Boss_DragonStates
 
         public override void Execute(Boss_Dragon entity)
         {
-            if (!entity.IsPlayerExistNearby)
+            if (Vector3.Distance(entity.transform.position, entity.mEnemyAggro.Target.transform.position) > 8f)
             {
                 entity.Animator.Play("Chase1");
-                entity.DestinationCoroutineStart();
+                entity.mNavMeshAgent.SetDestination(entity.mEnemyAggro.Target.transform.position);
+                return;
             }
-        
-            if (entity.IsCurrentAnimaitionStart &&
-                (int)entity.Animator.GetCurrentAnimatorStateInfo(0).normalizedTime > 0 &&
-                entity.mNavMeshAgent.remainingDistance < 0.1f ||
-                entity.IsPlayerExistNearby)
+
+            if (true)
             {
+                entity.mNavMeshAgent.velocity = Vector3.zero;
+                entity.mNavMeshAgent.isStopped = true;
+                entity.mNavMeshAgent.updateRotation = false;
+
                 if (entity.CurrentPhase == Phase.Normal)
                 {
                     int ranValue = Random.Range(0, 100);

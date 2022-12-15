@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor;
 using UnityEngine;
 
 public class EnemyFOV : MonoBehaviour
@@ -7,7 +8,7 @@ public class EnemyFOV : MonoBehaviour
     public float ViewRange = 15f;
     public float ViewAngle = 100f;
 
-    private GameObject bossDragonObj;
+    public GameObject bossDragonObj;
     private Boss_Dragon boss_dragon;
     private Transform enemyTr;
     private Transform playerTr;
